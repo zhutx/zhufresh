@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+
+<mapper namespace="com.moredian.tuna.certification.mapper.AuthTopMapper">
+
+    <resultMap id="authTopResultMap" type="authTop">
+		<result column="id" property="id" />
+		<result column="area_code" property="areaCode" />
+		<result column="area_name" property="areaName" />
+		<result column="org_type" property="orgType" />
+		<result column="org_id" property="orgId" />
+		<result column="org_name" property="orgName" />
+		<result column="auth_times" property="authTimes" />
+		<result column="fail_times" property="failTimes" />
+		<result column="gmt_create" property="gmtCreate" />
+		<result column="gmt_modify" property="gmtModify" />
+	</resultMap>
+	
+	<select id="findAuthTop" parameterType="map" resultMap="authTopResultMap">
+	    <include refid="sql_select" />
+	    from pmo_auth_top where area_code = #{areaCode} 
+	    order by
+	    <if test="topDirection == 'MAX'">
+	    auth_times desc
+	    </if>
+	    <if test="topDirection == 'MIN'">
+	    auth_times asc
+	    </if> 
+	    limit 10
+	</select>
+	
+	<select id="findAuthFailTop" parameterType="map" resultMap="authTopResultMap">
+	    <include refid="sql_select" />
+	    from pmo_auth_top where area_code = #{areaCode} 
+	    order by
+	    <if test="topDirection == 'MAX'">
+	    fail_times desc
+	    </if>
+	    <if test="topDirection == 'MIN'">
+	    fail_times asc
+	    </if> 
+	    limit 10
+	</select>
+	
+	<sql id="sql_select">
+		select
+			id,
+	        area_code,
+	        area_name,
+	        org_type,
+	        org_id,
+	        org_name,
+	        auth_times,
+	        fail_times,
+	        gmt_create,
+	        gmt_modify
+	</sql>
+	
+</mapper>

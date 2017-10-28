@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+  
+  <parent>
+    <groupId>com.moredian.bee</groupId>
+    <artifactId>bee-pom-parent</artifactId>
+    <version>0.0.1-SNAPSHOT</version>
+  </parent>
+  
+  <groupId>com.moredian.zhufresh</groupId>
+  <artifactId>zhufresh-parent</artifactId>
+  <packaging>pom</packaging>
+  
+  <modules>
+    <module>zhufresh-api</module>
+  	<module>zhufresh-service</module>
+  	<module>zhufresh-web</module>
+  </modules>
+  
+  <properties>
+	<current.version>0.0.1-SNAPSHOT</current.version>  
+  </properties>
+	
+  <dependencyManagement>
+    <dependencies>
+      <dependency>
+        <groupId>com.moredian.bee</groupId>
+        <artifactId>bee-pom-dependencies</artifactId>
+        <version>0.0.1-SNAPSHOT</version>
+        <type>pom</type>
+        <scope>import</scope>
+      </dependency>
+    </dependencies>
+  </dependencyManagement>
+	
+  <dependencies>
+    <dependency>
+	  <groupId>com.moredian.bee</groupId>
+	  <artifactId>bee-common</artifactId>
+	</dependency>
+  </dependencies>
+	
+</project>

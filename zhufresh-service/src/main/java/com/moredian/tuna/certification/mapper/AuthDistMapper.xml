@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+
+<mapper namespace="com.moredian.tuna.certification.mapper.AuthDistMapper">
+
+    <resultMap id="authDistResultMap" type="authDist">
+		<result column="id" property="id" />
+		<result column="area_code" property="areaCode" />
+		<result column="area_name" property="areaName" />
+		<result column="org_type" property="orgType" />
+		<result column="auth_times" property="authTimes" />
+		<result column="fail_times" property="failTimes" />
+		<result column="alarm_times" property="alarmTimes" />
+		<result column="gmt_create" property="gmtCreate" />
+		<result column="gmt_modify" property="gmtModify" />
+	</resultMap>
+	
+	<select id="findByAreaCode" parameterType="int" resultMap="authDistResultMap">
+	    <include refid="sql_select" />
+	    from pmo_auth_dist where area_code = #{areaCode} 
+	</select>
+	
+	<sql id="sql_select">
+		select
+			id,
+	        area_code,
+	        area_name,
+	        org_type,
+	        auth_times,
+	        fail_times,
+	        alarm_times,
+	        gmt_create,
+	        gmt_modify
+	</sql>
+	
+</mapper>

@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+
+<mapper namespace="com.moredian.tuna.certification.mapper.PrivateCloudMapper">
+
+    <resultMap id="privateCloudResultMap" type="privateCloud">
+        <result column="private_cloud_id" property="privateCloudId" />
+        <result column="area_level" property="areaLevel" />
+        <result column="area_code" property="areaCode" />
+        <result column="alarm_web_url" property="alarmWebUrl" />
+		<result column="gmt_create" property="gmtCreate" />
+		<result column="gmt_modify" property="gmtModify" />
+	</resultMap>
+	
+	<select id="findAll" resultMap="privateCloudResultMap">
+	    <include refid="sql_select" />
+	    from pmo_private_cloud
+	</select>
+	
+	<sql id="sql_select">
+		select
+			private_cloud_id,
+			area_level,
+			area_code,
+			alarm_web_url,
+	        gmt_create,
+	        gmt_modify
+	</sql>
+	
+</mapper>
