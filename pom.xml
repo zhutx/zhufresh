@@ -16,6 +16,12 @@
     <module>zhufresh-api</module>
   	<module>zhufresh-service</module>
   	<module>zhufresh-web</module>
+  	<module>zhufresh-purchase-web</module>
+  	<module>zhufresh-sorting-web</module>
+  	<module>zhufresh-delivery-web</module>
+  	<module>zhufresh-manage-web</module>
+  	<module>zhufresh-cs-web</module>
+  	<module>zhufresh-pc-web</module>
   </modules>
   
   <properties>
