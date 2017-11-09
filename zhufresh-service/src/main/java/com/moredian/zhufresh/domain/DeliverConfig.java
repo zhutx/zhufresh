@@ -2,11 +2,11 @@ package com.moredian.zhufresh.domain;
 
 import java.util.Date;
 
-public class DeliveryAbility {
+public class DeliverConfig {
 	
-	private Long deliverAbilityId;
+	private Long deliverConfigId;
 	private Long buildingId;
-	private Date theDay;
+	private String theDay;
 	private String fromTime;
 	private String toTime;
 	private Integer limitAmount;
@@ -14,11 +14,11 @@ public class DeliveryAbility {
 	private Date gmtCreate;
 	private Date gmtModify;
 	
-	public Long getDeliverAbilityId() {
-		return deliverAbilityId;
+	public Long getDeliverConfigId() {
+		return deliverConfigId;
 	}
-	public void setDeliverAbilityId(Long deliverAbilityId) {
-		this.deliverAbilityId = deliverAbilityId;
+	public void setDeliverConfigId(Long deliverConfigId) {
+		this.deliverConfigId = deliverConfigId;
 	}
 	public Long getBuildingId() {
 		return buildingId;
@@ -26,10 +26,10 @@ public class DeliveryAbility {
 	public void setBuildingId(Long buildingId) {
 		this.buildingId = buildingId;
 	}
-	public Date getTheDay() {
+	public String getTheDay() {
 		return theDay;
 	}
-	public void setTheDay(Date theDay) {
+	public void setTheDay(String theDay) {
 		this.theDay = theDay;
 	}
 	public String getFromTime() {

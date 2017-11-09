@@ -7,25 +7,39 @@ import com.moredian.bee.mybatis.convertor.PaginationConvertor;
 import com.moredian.bee.mybatis.domain.PaginationDomain;
 import com.moredian.bee.tube.annotation.SI;
 import com.moredian.idgenerator.service.IdgeneratorService;
+import com.moredian.zhufresh.config.ServiceProperties;
 import com.moredian.zhufresh.domain.Building;
 import com.moredian.zhufresh.domain.BuildingQueryCondition;
+import com.moredian.zhufresh.domain.DeliverConfig;
 import com.moredian.zhufresh.enums.BuildingStatus;
 import com.moredian.zhufresh.manager.BuildingManager;
 import com.moredian.zhufresh.mapper.BuildingMapper;
+import com.moredian.zhufresh.mapper.DeliverConfigMapper;
 import com.moredian.zhufresh.model.BuildingInfo;
 import com.moredian.zhufresh.request.BuildingCreateRequest;
 import com.moredian.zhufresh.request.BuildingQueryRequest;
 import com.moredian.zhufresh.request.BuildingUpdateRequest;
+import com.moredian.zhufresh.request.DeliverConfigRequest;
+import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.List;
 
 @Service
 public class BuildingManagerImpl implements BuildingManager {
 
     @Autowired
     private BuildingMapper buildingMapper;
+    @Autowired
+    private DeliverConfigMapper deliverConfigMapper;
     @SI
     private IdgeneratorService idgeneratorService;
+    @Autowired
+    private ServiceProperties serviceProperties;
 
     private Long genPrimaryKey(String name) {
         return idgeneratorService.getNextIdByTypeName(name).getData();
@@ -104,4 +118,46 @@ public class BuildingManagerImpl implements BuildingManager {
         buildingMapper.updateStatus(buildingId, buildingStatus.getValue());
         return true;
     }
+
+    @Override
+    public boolean configDeliver(DeliverConfigRequest request) {
+        BizAssert.notNull(request.getBuildingId(), "buildingId is required");
+        BizAssert.notBlank(request.getTheDay(), "theDay is required");
+        BizAssert.notBlank(request.getFromTime(), "fromTime is required");
+        BizAssert.notBlank(request.getToTime(), "toTime is required");
+        BizAssert.notNull(request.getLimitAmount(), "limitAmount is required");
+
+        DeliverConfig deliverConfig = new DeliverConfig();
+        deliverConfig.setDeliverConfigId(this.genPrimaryKey(DeliverConfig.class.getName()));
+        deliverConfig.setBuildingId(request.getBuildingId());
+        deliverConfig.setTheDay(request.getTheDay());
+        deliverConfig.setFromTime(request.getFromTime());
+        deliverConfig.setToTime(request.getToTime());
+        deliverConfig.setLimitAmount(request.getLimitAmount());
+        deliverConfig.setRealAmount(0);
+        deliverConfigMapper.insertOrUpdate(deliverConfig);
+
+        return true;
+    }
+
+    @Override
+    public List<DeliverConfig> searchDeliverConfig(Long buildingId, String theDay) {
+        BizAssert.notNull(buildingId, "buildingId is required");
+        if(StringUtils.isBlank(theDay)) {
+
+            Calendar cal = Calendar.getInstance();
+            int hour = cal.get(Calendar.HOUR_OF_DAY);
+
+            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+            if(hour < serviceProperties.getDeadlineHour()) { // 获取当日配送服务时间
+                theDay = sdf.format(cal.getTime());
+            } else { // 获取次日配送服务时间
+                cal.add(Calendar.DATE, 1);
+                theDay = sdf.format(cal.getTime());
+            }
+
+        }
+        return deliverConfigMapper.findByBuildingId(buildingId, theDay);
+    }
+
 }
