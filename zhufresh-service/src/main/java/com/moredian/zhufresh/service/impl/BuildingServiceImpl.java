@@ -1,7 +1,9 @@
 package com.moredian.zhufresh.service.impl;
 
 import com.moredian.bee.common.rpc.ServiceResponse;
+import com.moredian.bee.common.utils.BeanUtils;
 import com.moredian.bee.common.utils.Pagination;
+import com.moredian.bee.mybatis.convertor.PaginationConvertor;
 import com.moredian.bee.mybatis.domain.PaginationDomain;
 import com.moredian.bee.tube.annotation.SI;
 import com.moredian.zhufresh.domain.Building;
@@ -12,7 +14,11 @@ import com.moredian.zhufresh.request.BuildingCreateRequest;
 import com.moredian.zhufresh.request.BuildingQueryRequest;
 import com.moredian.zhufresh.request.BuildingUpdateRequest;
 import com.moredian.zhufresh.service.BuildingService;
+import org.apache.commons.collections.CollectionUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @SI
 public class BuildingServiceImpl implements BuildingService {
@@ -20,8 +26,19 @@ public class BuildingServiceImpl implements BuildingService {
     @Autowired
     private BuildingManager buildingManager;
 
-    private Pagination<BuildingInfo> paginationDomainToPagination(PaginationDomain<Building> paginationDomain) {
-        return null;
+    private List<BuildingInfo> buildingListToBuildingInfoList(List<Building> buildings) {
+        List<BuildingInfo> buildingInfoList = new ArrayList<>();
+        if(CollectionUtils.isEmpty(buildings)) return buildingInfoList;
+
+        return BeanUtils.copyListProperties(BuildingInfo.class, buildings);
+    }
+
+    private Pagination<BuildingInfo> paginationDomainToPagination(PaginationDomain<Building> fromPagination) {
+        Pagination<BuildingInfo> toPagination = PaginationConvertor.paginationDomainToPagination(fromPagination, new Pagination<BuildingInfo>());
+        if (toPagination == null)
+            return null;
+        toPagination.setData(buildingListToBuildingInfoList(fromPagination.getData()));
+        return toPagination;
     }
 
     @Override

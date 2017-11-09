@@ -1,25 +1,12 @@
-package com.moredian.zhufresh.request;
+package com.moredian.zhufresh.web.controller.building.request;
 
-import java.io.Serializable;
+public class BuildingCreateModel {
 
-public class BuildingUpdateRequest implements Serializable {
-
-    private static final long serialVersionUID = 1418378177842294145L;
-
-    private Long buildingId;
     private Integer provCode;
     private Integer cityCode;
     private Integer districtCode;
     private String buildingName;
     private String keywords;
-
-    public Long getBuildingId() {
-        return buildingId;
-    }
-
-    public void setBuildingId(Long buildingId) {
-        this.buildingId = buildingId;
-    }
 
     public Integer getProvCode() {
         return provCode;

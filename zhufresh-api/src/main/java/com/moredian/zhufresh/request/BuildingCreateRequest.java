@@ -9,6 +9,7 @@ public class BuildingCreateRequest implements Serializable {
     private Integer provCode;
     private Integer cityCode;
     private Integer districtCode;
+    private String keywords;
     private String buildingName;
 
     public Integer getProvCode() {
@@ -33,6 +34,14 @@ public class BuildingCreateRequest implements Serializable {
 
     public void setDistrictCode(Integer districtCode) {
         this.districtCode = districtCode;
+    }
+
+    public String getKeywords() {
+        return keywords;
+    }
+
+    public void setKeywords(String keywords) {
+        this.keywords = keywords;
     }
 
     public String getBuildingName() {

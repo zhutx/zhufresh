@@ -1,25 +1,14 @@
-package com.moredian.zhufresh.request;
+package com.moredian.zhufresh.web.controller.building.request;
 
-import java.io.Serializable;
+import com.moredian.zhufresh.web.model.PageModel;
+import org.apache.commons.lang.StringUtils;
 
-public class BuildingUpdateRequest implements Serializable {
+public class BuildingQueryModel extends PageModel{
 
-    private static final long serialVersionUID = 1418378177842294145L;
-
-    private Long buildingId;
     private Integer provCode;
     private Integer cityCode;
     private Integer districtCode;
-    private String buildingName;
     private String keywords;
-
-    public Long getBuildingId() {
-        return buildingId;
-    }
-
-    public void setBuildingId(Long buildingId) {
-        this.buildingId = buildingId;
-    }
 
     public Integer getProvCode() {
         return provCode;
@@ -45,19 +34,15 @@ public class BuildingUpdateRequest implements Serializable {
         this.districtCode = districtCode;
     }
 
-    public String getBuildingName() {
-        return buildingName;
-    }
-
-    public void setBuildingName(String buildingName) {
-        this.buildingName = buildingName;
-    }
-
     public String getKeywords() {
         return keywords;
     }
 
     public void setKeywords(String keywords) {
-        this.keywords = keywords;
+        if (StringUtils.isBlank(keywords)) {
+            this.keywords = null;
+        } else {
+            this.keywords = keywords;
+        }
     }
 }
