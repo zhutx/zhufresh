@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+
+<mapper namespace="com.moredian.zhufresh.mapper.BuildingMapper" >
+
+    <resultMap id="buildingResultMap" type="building">
+        <result column="building_id" property="buildingId" />
+        <result column="building_name" property="buildingName" />
+        <result column="prov_code" property="provCode" />
+		<result column="city_code" property="cityCode" />
+		<result column="district_code" property="districtCode" />
+		<result column="keywords" property="keywords" />
+		<result column="status" property="status" />
+		<result column="gmt_create" property="gmtCreate" />
+		<result column="gmt_modify" property="gmtModify" />
+	</resultMap>
+	
+	<insert id="insert" parameterType="building">
+	    insert into building (
+	        building_id,
+			building_name,
+	        prov_code,
+	        city_code,
+	        district_code,
+	        keywords,
+	        status,
+	        gmt_create,
+	        gmt_modify
+	    ) values (
+	        #{buildingId},
+	        #{buildingName},
+	        #{provCode},
+	        #{cityCode},
+	        #{districtCode},
+	        #{keywords},
+	        #{status},
+	        now(6),
+	        now(6)
+	    )
+	</insert>
+	
+	<update id="update" parameterType="building">
+		update building
+		<set>
+		<if test="provCode != null">
+			prov_code = #{provCode},
+		</if>
+		<if test="cityCode != null">
+			city_code = #{cityCode},
+		</if>
+		<if test="districtCode != null">
+			district_code = #{districtCode},
+		</if>
+		<if test="buildingName != null">
+			building_name = #{buildingName},
+		</if>
+		<if test="keywords != null">
+			keywords = #{keywords},
+		</if>
+			gmt_modify = now(3)
+		</set>
+		where building_id = #{buildingId}
+	</update>
+
+	<update id="updateStatus" parameterType="map">
+		update building set status = #{status} where building_id = #{buildingId}
+	</update>
+	
+	<delete id="delete" parameterType="map">
+	    delete from building where building_id = #{buildingId}
+	</delete>
+	
+	<select id="load" parameterType="map" resultMap="buildingResultMap">
+	    <include refid="sql_select"></include>
+	    from building where building_id = #{buildingId}
+	</select>
+
+	<select id="getTotalCountByCondition" parameterType="buildingQueryCondition" resultType="int">
+        select count(*)
+		<include refid="condition_sql_where"/>
+	</select>
+
+	<select id="findPaginationByCondition" parameterType="buildingQueryCondition" resultMap="buildingResultMap">
+		<include refid="sql_select"></include>
+		<include refid="condition_sql_where"/>
+	</select>
+	
+	<sql id="sql_select">
+		select
+			building_id,
+			building_name,
+	        prov_code,
+	        city_code,
+	        district_code,
+	        keywords,
+	        status,
+	        gmt_create,
+	        gmt_modify
+	</sql>
+
+	<sql id="condition_sql_where">
+		from building
+		<where>
+			1 = 1
+		<if test="provCode != null">
+			and prov_code = #{provCode}
+		</if>
+		<if test="cityCode != null">
+			and city_code = #{cityCode}
+		</if>
+		<if test="districtCode != null">
+			and district_code = #{districtCode}
+		</if>
+		<if test="keywords != null">
+			and keywords = #{keywords}
+		</if>
+		</where>
+	</sql>
+	
+</mapper>
