@@ -11,6 +11,7 @@
 		<result column="building_id" property="buildingId" />
 		<result column="address_info" property="addressInfo" />
 		<result column="address_tag" property="addressTag" />
+		<result column="current_flag" property="currentFlag" />
 		<result column="gmt_create" property="gmtCreate" />
 		<result column="gmt_modify" property="gmtModify" />
 	</resultMap>
@@ -24,6 +25,7 @@
 	        building_id,
 	        address_info,
 	        address_tag,
+	        current_flag,
 	        gmt_create,
 	        gmt_modify
 	    ) values (
@@ -34,6 +36,7 @@
 	        #{buildingId},
 	        #{addressInfo},
 	        #{addressTag},
+	        #{currentFlag},
 	        now(6),
 	        now(6)
 	    )
@@ -71,10 +74,23 @@
 	    from address where user_id = #{userId} and address_id = #{addressId}
 	</select>
 
+	<select id="loadCurrent" parameterType="map" resultMap="addressResultMap">
+		<include refid="sql_select"></include>
+		from address where user_id = #{userId} and current_flag = 1
+	</select>
+
 	<select id="findByUserId" parameterType="map" resultMap="addressResultMap">
 		<include refid="sql_select"></include>
 		from address where user_id = #{userId} order by gmt_create desc
 	</select>
+
+	<update id="clearCurrentFlag" parameterType="map">
+		update address set current_flag = 0 where user_id = #{userId}
+	</update>
+
+	<update id="updateCurrentFlag" parameterType="map">
+		update address set current_flag = 1 where user_id = #{userId} and address_id = #{addressId}
+	</update>
 
 	<sql id="sql_select">
 		select
@@ -85,6 +101,7 @@
 	        building_id,
 	        address_info,
 	        address_tag,
+	        current_flag,
 	        gmt_create,
 	        gmt_modify
 	</sql>

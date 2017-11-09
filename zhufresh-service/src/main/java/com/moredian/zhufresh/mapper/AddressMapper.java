@@ -17,6 +17,12 @@ public interface AddressMapper {
 
     Address load(@Param("userId") Long userId, @Param("addressId") Long addressId);
 
+    Address loadCurrent(@Param("userId") Long userId);
+
     List<Address> findByUserId(@Param("userId") Long userId);
+
+    int clearCurrentFlag(@Param("userId") Long userId);
+
+    int updateCurrentFlag(@Param("userId") Long userId, @Param("addressId") Long addressId);
 
 }

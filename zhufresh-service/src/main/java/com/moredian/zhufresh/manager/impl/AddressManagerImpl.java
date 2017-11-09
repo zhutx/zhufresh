@@ -5,12 +5,14 @@ import com.moredian.bee.common.utils.BeanUtils;
 import com.moredian.bee.tube.annotation.SI;
 import com.moredian.idgenerator.service.IdgeneratorService;
 import com.moredian.zhufresh.domain.Address;
+import com.moredian.zhufresh.enums.YesNoFlag;
 import com.moredian.zhufresh.manager.AddressManager;
 import com.moredian.zhufresh.mapper.AddressMapper;
 import com.moredian.zhufresh.request.AddressCreateRequest;
 import com.moredian.zhufresh.request.AddressUpdateRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -29,6 +31,7 @@ public class AddressManagerImpl implements AddressManager {
     private Address requestToDomain(AddressCreateRequest request) {
         Address address = BeanUtils.copyProperties(Address.class, request);
         address.setAddressId(genPrimaryKey(Address.class.getName()));
+        address.setCurrentFlag(YesNoFlag.NO.getValue());
         return address;
     }
 
@@ -77,5 +80,24 @@ public class AddressManagerImpl implements AddressManager {
     public List<Address> queryAddress(Long userId) {
         BizAssert.notNull(userId, "userId is required");
         return addressMapper.findByUserId(userId);
+    }
+
+    @Override
+    public Address getCurrent(Long userId) {
+        BizAssert.notNull(userId, "userId is required");
+        return addressMapper.loadCurrent(userId);
+    }
+
+    @Override
+    public Address getAddress(Long userId, Long addressId) {
+        return addressMapper.load(userId, addressId);
+    }
+
+    @Override
+    @Transactional
+    public boolean toggleCurrent(Long userId, Long addressId) {
+        addressMapper.clearCurrentFlag(userId);
+        addressMapper.updateCurrentFlag(userId, addressId);
+        return true;
     }
 }

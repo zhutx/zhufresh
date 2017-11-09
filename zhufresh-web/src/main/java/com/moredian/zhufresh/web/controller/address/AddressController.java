@@ -15,6 +15,7 @@ import com.moredian.zhufresh.web.BaseController;
 import com.moredian.zhufresh.web.controller.address.request.AddressCreateModel;
 import com.moredian.zhufresh.web.controller.address.request.AddressDeleteModel;
 import com.moredian.zhufresh.web.controller.address.request.AddressUpdateModel;
+import com.moredian.zhufresh.web.controller.address.request.CurrentAddressToggleModel;
 import com.moredian.zhufresh.web.controller.address.response.AddressData;
 import com.moredian.zhufresh.web.controller.building.request.BuildingDeleteModel;
 import com.moredian.zhufresh.web.controller.building.request.BuildingQueryModel;
@@ -76,6 +77,37 @@ public class AddressController extends BaseController {
         List<AddressInfo> addressInfos = addressService.searchAddress(userId);
         BaseResponse<List<AddressData>> br = new BaseResponse<>();
         br.setData(addressInfoListToAddressDataList(addressInfos));
+        return br;
+
+    }
+
+    @RequestMapping(value="/current", method= RequestMethod.PUT)
+    @ResponseBody
+    public BaseResponse toggleCurrent(@RequestBody CurrentAddressToggleModel model) {
+        addressService.toggleCurrent(model.getUserId(), model.getAddressId()).pickDataThrowException();
+        return new BaseResponse();
+    }
+
+    private AddressData addressInfoToAddressData(AddressInfo addressInfo) {
+        return BeanUtils.copyProperties(AddressData.class, addressInfo);
+    }
+
+    @RequestMapping(value="/info", method= RequestMethod.GET)
+    @ResponseBody
+    public BaseResponse list(@RequestParam(value = "userId") Long userId, @RequestParam(value = "addressId") Long addressId) {
+        AddressInfo addressInfo = addressService.getAddress(userId, addressId);
+        BaseResponse<AddressData> br = new BaseResponse<>();
+        br.setData(addressInfoToAddressData(addressInfo));
+        return br;
+
+    }
+
+    @RequestMapping(value="/current", method= RequestMethod.GET)
+    @ResponseBody
+    public BaseResponse getCurrent(@RequestParam(value = "userId") Long userId) {
+        AddressInfo addressInfo = addressService.getCurrent(userId);
+        BaseResponse<AddressData> br = new BaseResponse<>();
+        br.setData(addressInfoToAddressData(addressInfo));
         return br;
 
     }

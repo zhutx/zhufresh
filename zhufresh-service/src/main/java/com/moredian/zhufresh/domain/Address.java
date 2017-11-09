@@ -11,6 +11,7 @@ public class Address {
 	private Long buildingId;
 	private String addressInfo;
 	private String addressTag;
+	private Integer currentFlag;
 	private Date gmtCreate;
 	private Date gmtModify;
 	
@@ -61,6 +62,15 @@ public class Address {
 	public void setAddressTag(String addressTag) {
 		this.addressTag = addressTag;
 	}
+
+	public Integer getCurrentFlag() {
+		return currentFlag;
+	}
+
+	public void setCurrentFlag(Integer currentFlag) {
+		this.currentFlag = currentFlag;
+	}
+
 	public Date getGmtCreate() {
 		return gmtCreate;
 	}

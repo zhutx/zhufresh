@@ -16,4 +16,10 @@ public interface AddressManager {
 
     List<Address> queryAddress(Long userId);
 
+    Address getAddress(Long userId, Long addressId);
+
+    Address getCurrent(Long userId);
+
+    boolean toggleCurrent(Long userId, Long addressId);
+
 }

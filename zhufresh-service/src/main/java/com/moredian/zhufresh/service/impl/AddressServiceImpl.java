@@ -10,6 +10,7 @@ import com.moredian.zhufresh.request.AddressCreateRequest;
 import com.moredian.zhufresh.request.AddressUpdateRequest;
 import com.moredian.zhufresh.service.AddressService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Bean;
 
 import java.io.Serializable;
 import java.util.List;
@@ -48,4 +49,25 @@ public class AddressServiceImpl implements AddressService {
         return addressListToAddressInfoList(addressList);
     }
 
+    private AddressInfo addressToAddressInfo(Address address) {
+        return BeanUtils.copyProperties(AddressInfo.class, address);
+    }
+
+    @Override
+    public AddressInfo getAddress(Long userId, Long addressId) {
+        Address address = addressManager.getAddress(userId, addressId);
+        return addressToAddressInfo(address);
+    }
+
+    @Override
+    public AddressInfo getCurrent(Long userId) {
+        Address address = addressManager.getCurrent(userId);
+        return addressToAddressInfo(address);
+    }
+
+    @Override
+    public ServiceResponse<Boolean> toggleCurrent(Long userId, Long addressId) {
+        boolean result = addressManager.toggleCurrent(userId, addressId);
+        return new ServiceResponse<Boolean>(true, null, result);
+    }
 }

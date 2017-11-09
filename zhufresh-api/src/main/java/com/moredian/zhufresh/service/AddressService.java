@@ -22,4 +22,10 @@ public interface AddressService {
 
     List<AddressInfo> searchAddress(Long userId);
 
+    AddressInfo getAddress(Long userId, Long addressId);
+
+    ServiceResponse<Boolean> toggleCurrent(Long userId, Long addressId);
+
+    AddressInfo getCurrent(Long userId);
+
 }
