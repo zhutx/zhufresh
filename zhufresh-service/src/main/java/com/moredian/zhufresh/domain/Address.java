@@ -6,7 +6,8 @@ public class Address {
 	
 	private Long addressId;
 	private Long userId;
-	private String name;
+	private String mobile;
+	private String receiveName;
 	private Long buildingId;
 	private String addressInfo;
 	private String addressTag;
@@ -25,12 +26,23 @@ public class Address {
 	public void setUserId(Long userId) {
 		this.userId = userId;
 	}
-	public String getName() {
-		return name;
+
+	public String getMobile() {
+		return mobile;
 	}
-	public void setName(String name) {
-		this.name = name;
+
+	public void setMobile(String mobile) {
+		this.mobile = mobile;
 	}
+
+	public String getReceiveName() {
+		return receiveName;
+	}
+
+	public void setReceiveName(String receiveName) {
+		this.receiveName = receiveName;
+	}
+
 	public Long getBuildingId() {
 		return buildingId;
 	}

@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+
+<mapper namespace="com.moredian.zhufresh.mapper.AddressMapper">
+
+	<resultMap id="addressResultMap" type="address">
+		<result column="address_id" property="addressId" />
+		<result column="user_id" property="userId" />
+		<result column="receive_name" property="receiveName" />
+		<result column="mobile" property="mobile" />
+		<result column="building_id" property="buildingId" />
+		<result column="address_info" property="addressInfo" />
+		<result column="address_tag" property="addressTag" />
+		<result column="gmt_create" property="gmtCreate" />
+		<result column="gmt_modify" property="gmtModify" />
+	</resultMap>
+	
+	<insert id="insert" parameterType="address">
+	    insert into address (
+	        address_id,
+			user_id,
+	        receive_name,
+	        mobile,
+	        building_id,
+	        address_info,
+	        address_tag,
+	        gmt_create,
+	        gmt_modify
+	    ) values (
+	        #{addressId},
+	        #{userId},
+	        #{receiveName},
+	        #{mobile},
+	        #{buildingId},
+	        #{addressInfo},
+	        #{addressTag},
+	        now(6),
+	        now(6)
+	    )
+	</insert>
+	
+	<update id="update" parameterType="address">
+		update address
+		<set>
+		<if test="receiveName != null">
+			receive_name = #{receiveName},
+		</if>
+		<if test="mobile != null">
+			mobile = #{mobile},
+		</if>
+		<if test="buildingId != null">
+			building_id = #{buildingId},
+		</if>
+		<if test="addressInfo != null">
+			address_info = #{addressInfo},
+		</if>
+		<if test="addressTag != null">
+			address_tag = #{addressTag},
+		</if>
+			gmt_modify = now(6)
+		</set>
+		where user_id = #{userId} and address_id = #{addressId}
+	</update>
+
+	<delete id="delete" parameterType="map">
+	    delete from address where user_id = #{userId} and address_id = #{addressId}
+	</delete>
+	
+	<select id="load" parameterType="map" resultMap="addressResultMap">
+	    <include refid="sql_select"></include>
+	    from address where user_id = #{userId} and address_id = #{addressId}
+	</select>
+
+	<select id="findByUserId" parameterType="map" resultMap="addressResultMap">
+		<include refid="sql_select"></include>
+		from address where user_id = #{userId} order by gmt_create desc
+	</select>
+
+	<sql id="sql_select">
+		select
+			address_id,
+			user_id,
+	        receive_name,
+	        mobile,
+	        building_id,
+	        address_info,
+	        address_tag,
+	        gmt_create,
+	        gmt_modify
+	</sql>
+	
+</mapper>
