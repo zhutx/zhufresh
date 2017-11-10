@@ -18,7 +18,7 @@ public class GoodsTypeServiceImpl implements GoodsTypeService {
     private GoodsTypeManager goodsTypeManager;
 
     @Override
-    public ServiceResponse<Long> addGoodsType(String goodsTypeName, Long parentId) {
+    public ServiceResponse<Long> createGoodsType(String goodsTypeName, Long parentId) {
         Long result = goodsTypeManager.addGoodsType(goodsTypeName, parentId);
         return new ServiceResponse<Long>(true, null, result);
     }

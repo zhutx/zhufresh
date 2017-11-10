@@ -7,7 +7,7 @@ import java.util.List;
 
 public interface GoodsTypeService {
 
-    ServiceResponse<Long> addGoodsType(String goodsTypeName, Long parentId);
+    ServiceResponse<Long> createGoodsType(String goodsTypeName, Long parentId);
 
     List<GoodsTypeInfo> findByParent(Long parentId);
 

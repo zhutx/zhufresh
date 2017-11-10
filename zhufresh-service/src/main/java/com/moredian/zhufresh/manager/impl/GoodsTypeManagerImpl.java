@@ -35,7 +35,7 @@ public class GoodsTypeManagerImpl implements GoodsTypeManager {
     @Override
     public Long addGoodsType(String goodsTypeName, Long parentId) {
         BizAssert.notBlank(goodsTypeName, "goodsTypeName is required");
-        if(parentId == null) parentId = 0L;
+        BizAssert.notNull(parentId, "parentId is required");
         GoodsType goodsType = this.buildGoodsType(goodsTypeName, parentId);
         goodsTypeMapper.insert(goodsType);
         return goodsType.getGoodsTypeId();
@@ -43,7 +43,7 @@ public class GoodsTypeManagerImpl implements GoodsTypeManager {
 
     @Override
     public List<GoodsType> findByParent(Long parentId) {
-        if(parentId == null) parentId = 0L;
+        BizAssert.notNull(parentId, "parentId is required");
         return goodsTypeMapper.findByParent(parentId);
     }
 }
