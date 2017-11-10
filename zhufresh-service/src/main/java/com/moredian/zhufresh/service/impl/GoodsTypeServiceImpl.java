@@ -7,8 +7,10 @@ import com.moredian.zhufresh.domain.GoodsType;
 import com.moredian.zhufresh.manager.GoodsTypeManager;
 import com.moredian.zhufresh.model.GoodsTypeInfo;
 import com.moredian.zhufresh.service.GoodsTypeService;
+import org.apache.commons.collections.CollectionUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @SI
@@ -24,6 +26,7 @@ public class GoodsTypeServiceImpl implements GoodsTypeService {
     }
 
     private List<GoodsTypeInfo> goodsTypesToGoodsTypeInfos(List<GoodsType> goodsTypes) {
+        if (CollectionUtils.isEmpty(goodsTypes)) return new ArrayList<>();
         return BeanUtils.copyListProperties(GoodsTypeInfo.class, goodsTypes);
     }
 

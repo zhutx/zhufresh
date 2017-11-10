@@ -1,0 +1,143 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+
+<mapper namespace="com.moredian.zhufresh.mapper.GoodsMapper" >
+
+    <resultMap id="goodsResultMap" type="goods">
+        <result column="goods_id" property="goodsId" />
+        <result column="goods_name" property="goodsName" />
+        <result column="goods_type1_id" property="goodsType1Id" />
+		<result column="goods_type2_id" property="goodsType2Id" />
+		<result column="goods_img_url" property="goodsImgUrl" />
+		<result column="goods_unit" property="goodsUnit" />
+		<result column="goods_unit_price" property="goodsUnitPrice" />
+		<result column="keywords" property="keywords" />
+		<result column="goods_desc" property="goodsDesc" />
+		<result column="status" property="status" />
+		<result column="gmt_create" property="gmtCreate" />
+		<result column="gmt_modify" property="gmtModify" />
+	</resultMap>
+	
+	<insert id="insert" parameterType="goods">
+	    insert into goods (
+	        goods_id,
+			goods_name,
+	        goods_type1_id,
+	        goods_type2_id,
+	        goods_img_url,
+	        goods_unit,
+	        goods_unit_price,
+	        keywords,
+	        goods_desc,
+	        status,
+	        gmt_create,
+	        gmt_modify
+	    ) values (
+	        #{goodsId},
+	        #{goodsName},
+	        #{goodsType1Id},
+	        #{goodsType2Id},
+	        #{goodsImgUrl},
+	        #{goodsUnit},
+	        #{goodsUnitPrice},
+	        #{keywords},
+	        #{goodsDesc},
+	        #{status},
+	        now(6),
+	        now(6)
+	    )
+	</insert>
+	
+	<update id="update" parameterType="goods">
+		update goods
+		<set>
+		<if test="goodsName != null">
+			goods_name = #{goodsName},
+		</if>
+		<if test="goodsType1Id != null">
+			goods_type1_id = #{goodsType1Id},
+		</if>
+		<if test="goodsType2Id != null">
+			goods_type2_id = #{goodsType2Id},
+		</if>
+		<if test="goodsImgUrl != null">
+			goods_img_url = #{goodsImgUrl},
+		</if>
+		<if test="goodsUnit != null">
+			goods_unit = #{goodsUnit},
+		</if>
+		<if test="goodsUnitPrice != null">
+			goods_unit_price = #{goodsUnitPrice},
+		</if>
+		<if test="keywords != null">
+			keywords = #{keywords},
+		</if>
+		<if test="goodsDesc != null">
+			goods_desc = #{goodsDesc},
+		</if>
+			gmt_modify = now(6)
+		</set>
+		where goods_id = #{goodsId}
+	</update>
+
+	<update id="updateStatus" parameterType="map">
+		update goods set status = #{status} where goods_id = #{goodsId}
+	</update>
+	
+	<delete id="delete" parameterType="map">
+	    delete from goods where goods_id = #{goodsId}
+	</delete>
+	
+	<select id="load" parameterType="map" resultMap="goodsResultMap">
+	    <include refid="sql_select"></include>
+	    from goods where goods_id = #{goodsId}
+	</select>
+
+	<select id="getTotalCountByCondition" parameterType="goodsQueryCondition" resultType="int">
+		select count(*)
+		<include refid="condition_sql_where"/>
+	</select>
+
+	<select id="findPaginationByCondition" parameterType="goodsQueryCondition" resultMap="goodsResultMap">
+		<include refid="sql_select"></include>
+		<include refid="condition_sql_where"/>
+		order by gmt_create desc
+		limit #{startRow}, #{pageSize}
+	</select>
+	
+	<sql id="sql_select">
+		select
+			goods_id,
+			goods_name,
+	        goods_type1_id,
+	        goods_type2_id,
+	        goods_img_url,
+	        goods_unit,
+	        goods_unit_price,
+	        keywords,
+	        goods_desc,
+	        status,
+	        gmt_create,
+	        gmt_modify
+	</sql>
+
+	<sql id="condition_sql_where">
+		from goods
+		<where>
+		1 = 1
+		<if test="goodsType1Id != null">
+			and goods_type1_id = #{goodsType1Id}
+		</if>
+		<if test="goodsType2Id != null">
+			and goods_type2_id = #{goodsType2Id}
+		</if>
+		<if test="keywords != null">
+			and keywords like CONCAT('%', #{keywords}, '%')
+		</if>
+		<if test="status != null">
+			and status = #{status}
+		</if>
+		</where>
+	</sql>
+	
+</mapper>

@@ -87,6 +87,7 @@ public class BuildingServiceImpl implements BuildingService {
     }
 
     private List<DeliverConfigInfo> deliverConfigListToDeliverConfigInfoList(List<DeliverConfig> deliverConfigList) {
+        if (CollectionUtils.isEmpty(deliverConfigList)) return new ArrayList<>();
         return BeanUtils.copyListProperties(DeliverConfigInfo.class, deliverConfigList);
     }
 

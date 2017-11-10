@@ -13,6 +13,7 @@ public class Goods {
 	private Integer goodsUnitPrice;
 	private String keywords;
 	private String goodsDesc;
+	private Integer status;
 	private Date gmtCreate;
 	private Date gmtModify;
 	
@@ -70,6 +71,15 @@ public class Goods {
 	public void setGoodsDesc(String goodsDesc) {
 		this.goodsDesc = goodsDesc;
 	}
+
+	public Integer getStatus() {
+		return status;
+	}
+
+	public void setStatus(Integer status) {
+		this.status = status;
+	}
+
 	public Date getGmtCreate() {
 		return gmtCreate;
 	}

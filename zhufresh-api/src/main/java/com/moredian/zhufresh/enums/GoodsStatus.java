@@ -1,10 +1,11 @@
 package com.moredian.zhufresh.enums;
 
 public enum GoodsStatus {
-	
+
+	DISABLE("禁用", 0),
 	ENABLE("可用", 1),
-	DISABLE("禁用", 2)
-	
+	DELETE("删除", 2)
+
 	;
 	
 	private String desc;

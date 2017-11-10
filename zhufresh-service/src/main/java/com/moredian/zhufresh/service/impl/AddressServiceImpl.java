@@ -9,10 +9,12 @@ import com.moredian.zhufresh.model.AddressInfo;
 import com.moredian.zhufresh.request.AddressCreateRequest;
 import com.moredian.zhufresh.request.AddressUpdateRequest;
 import com.moredian.zhufresh.service.AddressService;
+import org.apache.commons.collections.CollectionUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 
 @SI
@@ -40,6 +42,7 @@ public class AddressServiceImpl implements AddressService {
     }
 
     private List<AddressInfo> addressListToAddressInfoList(List<Address> addressList) {
+        if (CollectionUtils.isEmpty(addressList)) return new ArrayList<>();
         return BeanUtils.copyListProperties(AddressInfo.class, addressList);
     }
 
@@ -50,6 +53,7 @@ public class AddressServiceImpl implements AddressService {
     }
 
     private AddressInfo addressToAddressInfo(Address address) {
+        if (address == null) return null;
         return BeanUtils.copyProperties(AddressInfo.class, address);
     }
 

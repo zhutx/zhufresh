@@ -89,6 +89,7 @@ public class AddressController extends BaseController {
     }
 
     private AddressData addressInfoToAddressData(AddressInfo addressInfo) {
+        if(addressInfo == null) return null;
         return BeanUtils.copyProperties(AddressData.class, addressInfo);
     }
 
