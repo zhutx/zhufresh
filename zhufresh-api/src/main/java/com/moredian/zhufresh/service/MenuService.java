@@ -24,7 +24,7 @@ public interface MenuService {
 
     ServiceResponse<Boolean> deleteMenu(Long menuId);
 
-    ServiceResponse<Boolean> enabelMenu(Long menuId);
+    ServiceResponse<Boolean> enableMenu(Long menuId);
 
     ServiceResponse<Boolean> disableMenu(Long menuId);
 

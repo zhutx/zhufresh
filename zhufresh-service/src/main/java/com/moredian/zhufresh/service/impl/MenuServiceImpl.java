@@ -45,7 +45,7 @@ public class MenuServiceImpl implements MenuService {
     }
 
     @Override
-    public ServiceResponse<Boolean> enabelMenu(Long menuId) {
+    public ServiceResponse<Boolean> enableMenu(Long menuId) {
         boolean result = menuManager.updateStatus(menuId, MenuStatus.ENABLE);
         return new ServiceResponse<>(true, null, result);
     }
