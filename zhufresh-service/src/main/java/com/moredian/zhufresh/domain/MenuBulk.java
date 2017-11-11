@@ -9,6 +9,7 @@ public class MenuBulk {
 	private String blukName;
 	private String weightText;
 	private Long relationGoodsId;
+	private Integer sort;
 	private Date gmtCreate;
 	private Date gmtModify;
 	
@@ -42,6 +43,15 @@ public class MenuBulk {
 	public void setRelationGoodsId(Long relationGoodsId) {
 		this.relationGoodsId = relationGoodsId;
 	}
+
+	public Integer getSort() {
+		return sort;
+	}
+
+	public void setSort(Integer sort) {
+		this.sort = sort;
+	}
+
 	public Date getGmtCreate() {
 		return gmtCreate;
 	}

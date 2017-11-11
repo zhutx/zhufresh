@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+
+<mapper namespace="com.moredian.zhufresh.mapper.MenuStepMapper" >
+
+    <resultMap id="menuStepResultMap" type="menuStep">
+        <result column="menu_step_id" property="menuStepId" />
+        <result column="menu_id" property="menuId" />
+        <result column="step_number" property="stepNumber" />
+		<result column="step_img_url" property="stepImgUrl" />
+		<result column="step_desc" property="stepDesc" />
+		<result column="gmt_create" property="gmtCreate" />
+		<result column="gmt_modify" property="gmtModify" />
+	</resultMap>
+	
+	<insert id="insert" parameterType="menuStep">
+	    insert into menu_step (
+	        menu_step_id,
+			menu_id,
+	        step_number,
+	        step_img_url,
+	        step_desc,
+	        gmt_create,
+	        gmt_modify
+	    ) values (
+	        #{menuStepId},
+	        #{menuId},
+	        #{stepNumber},
+	        #{stepImgUrl},
+	        #{stepDesc},
+	        now(6),
+	        now(6)
+	    )
+	</insert>
+
+	<delete id="deleteByMenuId" parameterType="map">
+		delete from menu_step where menu_id = #{menuId}
+	</delete>
+
+	<select id="findByMenuId" parameterType="map" resultMap="menuStepResultMap">
+		<include refid="sql_select" />
+		from menu_step where menu_id = #{menuId}
+	</select>
+	
+	<sql id="sql_select">
+		select
+			menu_step_id,
+			menu_id,
+	        step_number,
+	        step_img_url,
+	        step_desc,
+	        gmt_create,
+	        gmt_modify
+	</sql>
+	
+</mapper>

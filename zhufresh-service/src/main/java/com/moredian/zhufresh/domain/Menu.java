@@ -11,12 +11,11 @@ public class Menu {
 	private Integer placeType;
 	private Integer tasteType;
 	private String menuImgUrl;
-	private Integer menuUnit;
-	private Integer menuUnitPrice;
 	private Integer cookieWay;
 	private Integer cookieTime;
-	private Integer kaluli;
+	private String keywords;
 	private String menuDesc;
+	private Integer status;
 	private Date gmtCreate;
 	private Date gmtModify;
 	
@@ -62,18 +61,6 @@ public class Menu {
 	public void setMenuImgUrl(String menuImgUrl) {
 		this.menuImgUrl = menuImgUrl;
 	}
-	public Integer getMenuUnit() {
-		return menuUnit;
-	}
-	public void setMenuUnit(Integer menuUnit) {
-		this.menuUnit = menuUnit;
-	}
-	public Integer getMenuUnitPrice() {
-		return menuUnitPrice;
-	}
-	public void setMenuUnitPrice(Integer menuUnitPrice) {
-		this.menuUnitPrice = menuUnitPrice;
-	}
 	public Integer getCookieWay() {
 		return cookieWay;
 	}
@@ -86,18 +73,29 @@ public class Menu {
 	public void setCookieTime(Integer cookieTime) {
 		this.cookieTime = cookieTime;
 	}
-	public Integer getKaluli() {
-		return kaluli;
+	public String getKeywords() {
+		return keywords;
 	}
-	public void setKaluli(Integer kaluli) {
-		this.kaluli = kaluli;
+
+	public void setKeywords(String keywords) {
+		this.keywords = keywords;
 	}
+
 	public String getMenuDesc() {
 		return menuDesc;
 	}
 	public void setMenuDesc(String menuDesc) {
 		this.menuDesc = menuDesc;
 	}
+
+	public Integer getStatus() {
+		return status;
+	}
+
+	public void setStatus(Integer status) {
+		this.status = status;
+	}
+
 	public Date getGmtCreate() {
 		return gmtCreate;
 	}

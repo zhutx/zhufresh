@@ -84,10 +84,6 @@
 		update goods set status = #{status} where goods_id = #{goodsId}
 	</update>
 	
-	<delete id="delete" parameterType="map">
-	    delete from goods where goods_id = #{goodsId}
-	</delete>
-	
 	<select id="load" parameterType="map" resultMap="goodsResultMap">
 	    <include refid="sql_select"></include>
 	    from goods where goods_id = #{goodsId}

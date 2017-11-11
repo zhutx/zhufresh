@@ -1,0 +1,159 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+
+<mapper namespace="com.moredian.zhufresh.mapper.MenuMapper" >
+
+    <resultMap id="menuResultMap" type="menu">
+        <result column="menu_id" property="menuId" />
+        <result column="menu_name" property="menuName" />
+        <result column="hot_type" property="hotType" />
+		<result column="style_type" property="styleType" />
+		<result column="place_type" property="placeType" />
+		<result column="taste_type" property="tasteType" />
+		<result column="menu_img_url" property="menuImgUrl" />
+		<result column="cookie_way" property="cookieWay" />
+		<result column="cookie_time" property="cookieTime" />
+		<result column="keywords" property="keywords" />
+		<result column="menu_desc" property="menuDesc" />
+		<result column="status" property="status" />
+		<result column="gmt_create" property="gmtCreate" />
+		<result column="gmt_modify" property="gmtModify" />
+	</resultMap>
+	
+	<insert id="insert" parameterType="menu">
+	    insert into menu (
+	        menu_id,
+			menu_name,
+	        hot_type,
+	        style_type,
+	        place_type,
+	        taste_type,
+	        menu_img_url,
+	        cookie_way,
+	        cookie_time,
+	        keywords,
+	        menu_desc,
+	        status,
+	        gmt_create,
+	        gmt_modify
+	    ) values (
+	        #{menuId},
+	        #{menuName},
+	        #{hotType},
+	        #{styleType},
+	        #{placeType},
+	        #{tasteType},
+	        #{menuImgUrl},
+	        #{cookieWay},
+	        #{cookieTime},
+	        #{keywords},
+	        #{menuDesc},
+	        #{status},
+	        now(6),
+	        now(6)
+	    )
+	</insert>
+	
+	<update id="update" parameterType="menu">
+		update menu
+		<set>
+		<if test="menuName != null">
+			menu_name = #{menuName},
+		</if>
+		<if test="hotType != null">
+			hot_type = #{hotType},
+		</if>
+		<if test="styleType != null">
+			style_type = #{styleType},
+		</if>
+		<if test="placeType != null">
+			place_type = #{placeType},
+		</if>
+		<if test="tasteType != null">
+			taste_type = #{tasteType},
+		</if>
+		<if test="menuImgUrl != null">
+			menu_img_url = #{menuImgUrl},
+		</if>
+		<if test="cookieWay != null">
+			cookie_way = #{cookieWay},
+		</if>
+		<if test="cookieTime != null">
+			cookie_time = #{cookieTime},
+		</if>
+		<if test="keywords != null">
+			keywords = #{keywords},
+		</if>
+		<if test="menuDesc != null">
+			menu_desc = #{menuDesc},
+		</if>
+			gmt_modify = now(6)
+		</set>
+		where goods_id = #{goodsId}
+	</update>
+
+	<update id="updateStatus" parameterType="map">
+		update menu set status = #{status} where menu_id = #{menuId}
+	</update>
+	
+	<select id="load" parameterType="map" resultMap="menuResultMap">
+	    <include refid="sql_select"></include>
+	    from menu where menu_id = #{menuId}
+	</select>
+
+	<select id="getTotalCountByCondition" parameterType="menuQueryCondition" resultType="int">
+		select count(*)
+		<include refid="condition_sql_where"/>
+	</select>
+
+	<select id="findPaginationByCondition" parameterType="menuQueryCondition" resultMap="menuResultMap">
+		<include refid="sql_select"></include>
+		<include refid="condition_sql_where"/>
+		order by gmt_create desc
+		limit #{startRow}, #{pageSize}
+	</select>
+	
+	<sql id="sql_select">
+		select
+			menu_id,
+			menu_name,
+	        hot_type,
+	        style_type,
+	        place_type,
+	        taste_type,
+	        menu_img_url,
+	        cookie_way,
+	        cookie_time,
+	        keywords,
+	        menu_desc,
+	        status,
+	        gmt_create,
+	        gmt_modify
+	</sql>
+
+	<sql id="condition_sql_where">
+		from menu
+		<where>
+		1 = 1
+		<if test="hotType != null">
+			and hot_type = #{hotType}
+		</if>
+		<if test="styleType != null">
+			and style_type = #{styleType}
+		</if>
+		<if test="placeType != null">
+			and place_type = #{placeType}
+		</if>
+		<if test="tasteType != null">
+			and taste_type = #{tasteType}
+		</if>
+		<if test="keywords != null">
+			and keywords like CONCAT('%', #{keywords}, '%')
+		</if>
+		<if test="status != null">
+			and status = #{status}
+		</if>
+		</where>
+	</sql>
+	
+</mapper>

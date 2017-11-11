@@ -8,6 +8,7 @@ public class MenuGoods {
 	private Long menuId;
 	private Long goodsId;
 	private Integer weight;
+	private Integer sort;
 	private Date gmtCreate;
 	private Date gmtModify;
 	
@@ -35,6 +36,15 @@ public class MenuGoods {
 	public void setWeight(Integer weight) {
 		this.weight = weight;
 	}
+
+	public Integer getSort() {
+		return sort;
+	}
+
+	public void setSort(Integer sort) {
+		this.sort = sort;
+	}
+
 	public Date getGmtCreate() {
 		return gmtCreate;
 	}

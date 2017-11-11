@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+
+<mapper namespace="com.moredian.zhufresh.mapper.MenuGoodsMapper" >
+
+    <resultMap id="menuGoodsResultMap" type="menuGoods">
+        <result column="menu_goods_id" property="menuGoodsId" />
+        <result column="menu_id" property="menuId" />
+        <result column="goods_id" property="goodsId" />
+		<result column="weight" property="weight" />
+		<result column="sort" property="sort" />
+		<result column="gmt_create" property="gmtCreate" />
+		<result column="gmt_modify" property="gmtModify" />
+	</resultMap>
+	
+	<insert id="insert" parameterType="menuGoods">
+	    insert into menu_goods (
+	        menu_goods_id,
+			menu_id,
+	        goods_id,
+	        weight,
+	        sort,
+	        gmt_create,
+	        gmt_modify
+	    ) values (
+	        #{menuGoodsId},
+	        #{menuId},
+	        #{goodsId},
+	        #{weight},
+	        #{sort},
+	        now(6),
+	        now(6)
+	    )
+	</insert>
+	
+	<update id="updateByGoodsId" parameterType="map">
+		update menu_goods
+		<set>
+			weight = #{weight},
+			gmt_modify = now(6)
+		</set>
+		where menu_id = #{menuId} and goods_id = #{goodsId}
+	</update>
+
+	<delete id="deleteByGoodsId" parameterType="map">
+		delete from menu_goods where menu_id = #{menuId} and goods_id = #{goodsId}
+	</delete>
+
+	<select id="findGoodIdsByMenuId" parameterType="map" resultType="long">
+		select goods_id from menu_goods where menu_id = #{menuId}
+	</select>
+
+	<select id="findByMenuId" parameterType="map" resultMap="menuGoodsResultMap">
+		<include refid="sql_select" />
+		from menu_goods where menu_id = #{menuId}
+	</select>
+	
+	<sql id="sql_select">
+		select
+			menu_goods_id,
+			menu_id,
+	        goods_id,
+	        weight,
+	        sort,
+	        gmt_create,
+	        gmt_modify
+	</sql>
+	
+</mapper>
