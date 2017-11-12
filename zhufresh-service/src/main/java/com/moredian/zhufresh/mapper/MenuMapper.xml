@@ -11,8 +11,6 @@
 		<result column="place_type" property="placeType" />
 		<result column="taste_type" property="tasteType" />
 		<result column="menu_img_url" property="menuImgUrl" />
-		<result column="cookie_way" property="cookieWay" />
-		<result column="cookie_time" property="cookieTime" />
 		<result column="keywords" property="keywords" />
 		<result column="menu_desc" property="menuDesc" />
 		<result column="status" property="status" />
@@ -29,8 +27,6 @@
 	        place_type,
 	        taste_type,
 	        menu_img_url,
-	        cookie_way,
-	        cookie_time,
 	        keywords,
 	        menu_desc,
 	        status,
@@ -44,8 +40,6 @@
 	        #{placeType},
 	        #{tasteType},
 	        #{menuImgUrl},
-	        #{cookieWay},
-	        #{cookieTime},
 	        #{keywords},
 	        #{menuDesc},
 	        #{status},
@@ -75,12 +69,6 @@
 		<if test="menuImgUrl != null">
 			menu_img_url = #{menuImgUrl},
 		</if>
-		<if test="cookieWay != null">
-			cookie_way = #{cookieWay},
-		</if>
-		<if test="cookieTime != null">
-			cookie_time = #{cookieTime},
-		</if>
 		<if test="keywords != null">
 			keywords = #{keywords},
 		</if>
@@ -89,11 +77,11 @@
 		</if>
 			gmt_modify = now(6)
 		</set>
-		where goods_id = #{goodsId}
+		where menu_id = #{menuId}
 	</update>
 
 	<update id="updateStatus" parameterType="map">
-		update menu set status = #{status} where menu_id = #{menuId}
+		update menu set status = #{status}, gmt_modify = now(6) where menu_id = #{menuId}
 	</update>
 	
 	<select id="load" parameterType="map" resultMap="menuResultMap">
@@ -122,8 +110,6 @@
 	        place_type,
 	        taste_type,
 	        menu_img_url,
-	        cookie_way,
-	        cookie_time,
 	        keywords,
 	        menu_desc,
 	        status,

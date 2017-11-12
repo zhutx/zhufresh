@@ -6,7 +6,7 @@ public class MenuBulk {
 	
 	private Long menuBulkId;
 	private Long menuId;
-	private String blukName;
+	private String bulkName;
 	private String weightText;
 	private Long relationGoodsId;
 	private Integer sort;
@@ -25,12 +25,15 @@ public class MenuBulk {
 	public void setMenuId(Long menuId) {
 		this.menuId = menuId;
 	}
-	public String getBlukName() {
-		return blukName;
+
+	public String getBulkName() {
+		return bulkName;
 	}
-	public void setBlukName(String blukName) {
-		this.blukName = blukName;
+
+	public void setBulkName(String bulkName) {
+		this.bulkName = bulkName;
 	}
+
 	public String getWeightText() {
 		return weightText;
 	}

@@ -8,8 +8,6 @@ public class MenuCreateModel {
     private Integer placeType;
     private Integer tasteType;
     private String menuImgUrl;
-    private Integer cookieWay;
-    private Integer cookieTime;
     private String keywords;
     private String menuDesc;
 
@@ -59,22 +57,6 @@ public class MenuCreateModel {
 
     public void setMenuImgUrl(String menuImgUrl) {
         this.menuImgUrl = menuImgUrl;
-    }
-
-    public Integer getCookieWay() {
-        return cookieWay;
-    }
-
-    public void setCookieWay(Integer cookieWay) {
-        this.cookieWay = cookieWay;
-    }
-
-    public Integer getCookieTime() {
-        return cookieTime;
-    }
-
-    public void setCookieTime(Integer cookieTime) {
-        this.cookieTime = cookieTime;
     }
 
     public String getKeywords() {

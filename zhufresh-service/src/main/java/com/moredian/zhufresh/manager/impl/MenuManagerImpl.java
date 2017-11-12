@@ -55,8 +55,6 @@ public class MenuManagerImpl implements MenuManager {
     public Long addMenu(MenuCreateRequest request) {
         BizAssert.notBlank(request.getMenuName(), "menuName is required");
         BizAssert.notBlank(request.getMenuImgUrl(), "menuImgUrl is required");
-        BizAssert.notNull(request.getCookieWay(), "cookieWay is required");
-        BizAssert.notNull(request.getCookieTime(), "cookieTime is required");
 
         Menu menu = requestToDomain(request);
         menuMapper.insert(menu);

@@ -9,11 +9,6 @@ public class MenuData {
     private Integer placeType;
     private Integer tasteType;
     private String menuImgUrl;
-    private Integer menuUnit;
-    private Integer menuUnitPrice;
-    private Integer cookieWay;
-    private Integer cookieTime;
-    private Integer kaluli;
     private String keywords;
     private String menuDesc;
 
@@ -71,46 +66,6 @@ public class MenuData {
 
     public void setMenuImgUrl(String menuImgUrl) {
         this.menuImgUrl = menuImgUrl;
-    }
-
-    public Integer getMenuUnit() {
-        return menuUnit;
-    }
-
-    public void setMenuUnit(Integer menuUnit) {
-        this.menuUnit = menuUnit;
-    }
-
-    public Integer getMenuUnitPrice() {
-        return menuUnitPrice;
-    }
-
-    public void setMenuUnitPrice(Integer menuUnitPrice) {
-        this.menuUnitPrice = menuUnitPrice;
-    }
-
-    public Integer getCookieWay() {
-        return cookieWay;
-    }
-
-    public void setCookieWay(Integer cookieWay) {
-        this.cookieWay = cookieWay;
-    }
-
-    public Integer getCookieTime() {
-        return cookieTime;
-    }
-
-    public void setCookieTime(Integer cookieTime) {
-        this.cookieTime = cookieTime;
-    }
-
-    public Integer getKaluli() {
-        return kaluli;
-    }
-
-    public void setKaluli(Integer kaluli) {
-        this.kaluli = kaluli;
     }
 
     public String getKeywords() {
