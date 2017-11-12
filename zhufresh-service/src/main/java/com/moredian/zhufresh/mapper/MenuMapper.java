@@ -22,6 +22,8 @@ public interface MenuMapper {
 
     int getTotalCountByCondition(MenuQueryCondition condition);
 
-    List<Goods> findPaginationByCondition(MenuQueryCondition condition);
+    List<Menu> findPaginationByCondition(MenuQueryCondition condition);
+
+    List<Menu> findPaginationByIds(@Param("menuIdList") List<Long> menuIds, @Param("startRow") Integer startRow, @Param("pageSize") Integer pageSize);
 
 }

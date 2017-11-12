@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+
+<mapper namespace="com.moredian.zhufresh.mapper.FavoriteMapper" >
+
+    <resultMap id="favoriteResultMap" type="favorite">
+        <result column="favorite_id" property="favoriteId" />
+        <result column="user_id" property="userId" />
+        <result column="favorite_name" property="favoriteName" />
+		<result column="gmt_create" property="gmtCreate" />
+		<result column="gmt_modify" property="gmtModify" />
+	</resultMap>
+	
+	<insert id="insert" parameterType="favorite">
+	    insert into favorite (
+	        favorite_id,
+			user_id,
+	        favorite_name,
+	        gmt_create,
+	        gmt_modify
+	    ) values (
+	        #{favoriteId},
+	        #{userId},
+	        #{favoriteName},
+	        now(6),
+	        now(6)
+	    )
+	</insert>
+	
+	<update id="update" parameterType="favorite">
+		update favorite
+		<set>
+			favorite_name = #{favoriteName},
+			gmt_modify = now(6)
+		</set>
+		where user_id = #{userId} and favorite_id = #{favoriteId}
+	</update>
+
+	<delete id="delete" parameterType="map">
+		delete from favorite where user_id = #{userId} and favorite_id = #{favoriteId}
+	</delete>
+
+	<select id="findByUserId" parameterType="map" resultMap="favoriteResultMap">
+		<include refid="sql_select"/>
+		from favorite where user_id = #{userId}
+	</select>
+	
+	<sql id="sql_select">
+		select
+			favorite_id,
+			user_id,
+	        favorite_name,
+	        gmt_create,
+	        gmt_modify
+	</sql>
+	
+</mapper>

@@ -151,7 +151,7 @@ public class MenuController extends BaseController {
         return BeanUtils.copyListProperties(MenuGoodsData.class, menuGoodsInfos);
     }
 
-    @RequestMapping(value="/goods/list", method= RequestMethod.GET)
+    @RequestMapping(value="/goods/config", method= RequestMethod.GET)
     @ResponseBody
     public BaseResponse listGoods(@RequestParam(value = "menuId") Long menuId) {
         List<MenuGoodsInfo> menuGoodsInfos = menuService.findGoods(menuId);
@@ -165,7 +165,7 @@ public class MenuController extends BaseController {
         return BeanUtils.copyListProperties(MenuBulkData.class, menuBulkInfos);
     }
 
-    @RequestMapping(value="/bulk/list", method= RequestMethod.GET)
+    @RequestMapping(value="/bulk/config", method= RequestMethod.GET)
     @ResponseBody
     public BaseResponse listBulk(@RequestParam(value = "menuId") Long menuId) {
         List<MenuBulkInfo> menuBulkInfos = menuService.findBulk(menuId);
@@ -179,7 +179,7 @@ public class MenuController extends BaseController {
         return BeanUtils.copyListProperties(MenuStepData.class, menuStepInfos);
     }
 
-    @RequestMapping(value="/step/list", method= RequestMethod.GET)
+    @RequestMapping(value="/step/config", method= RequestMethod.GET)
     @ResponseBody
     public BaseResponse listStep(@RequestParam(value = "menuId") Long menuId) {
         List<MenuStepInfo> menuStepInfos = menuService.findStep(menuId);
