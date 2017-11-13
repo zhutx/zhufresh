@@ -26,7 +26,7 @@ public interface TicketService {
 
     ServiceResponse<Boolean> bindUser(Long userId, String ticketCode);
 
-    List<TicketInfo> findTicket(Long userId);
+    List<TicketInfo> findUserTicket(Long userId);
 
     Pagination<TicketInfo> searchTicket(TicketQueryRequest request, Pagination<TicketInfo> pagination);
 

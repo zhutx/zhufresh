@@ -142,7 +142,7 @@ public class TicketManagerImpl implements TicketManager {
     }
 
     @Override
-    public List<Ticket> findTicket(Long userId) {
+    public List<Ticket> findUserTicket(Long userId) {
         BizAssert.notNull(userId, "userId is required");
         return ticketMapper.findTicketByUserId(userId, TicketStatus.UNUSED.getValue());
     }

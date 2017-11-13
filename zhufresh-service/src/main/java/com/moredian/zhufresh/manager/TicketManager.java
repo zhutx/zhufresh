@@ -21,7 +21,7 @@ public interface TicketManager {
 
     boolean bindUser(Long userId, String ticketCode);
 
-    List<Ticket> findTicket(Long userId);
+    List<Ticket> findUserTicket(Long userId);
 
     boolean useTicket(Long userId, Long ticketId);
 

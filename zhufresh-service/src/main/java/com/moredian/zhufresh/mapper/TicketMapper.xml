@@ -104,19 +104,19 @@
 	</sql>
 
 	<sql id="condition_sql_where">
-		from building
+		from ticket
 		<where>
 			1 = 1
-		<if test="ticket_price != null">
+		<if test="ticketPrice != null">
 			and ticket_price = #{ticketPrice}
 		</if>
-		<if test="dispatch_oper_id != null">
+		<if test="dispatchOperId != null">
 			and dispatch_oper_id = #{dispatchOperId}
 		</if>
-		<if test="bind_user_id != null">
+		<if test="bindUserId != null">
 			and bind_user_id = #{bindUserId}
 		</if>
-		<if test="long_time_flag != null">
+		<if test="longTimeFlag != null">
 			and long_time_flag = #{longTimeFlag}
 		</if>
 		<if test="status != null">
