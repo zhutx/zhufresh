@@ -1,0 +1,128 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+
+<mapper namespace="com.moredian.zhufresh.mapper.TicketMapper" >
+
+    <resultMap id="ticketResultMap" type="ticket">
+        <result column="ticket_id" property="ticketId" />
+        <result column="ticket_code" property="ticketCode" />
+        <result column="ticket_price" property="ticketPrice" />
+		<result column="dispatch_oper_id" property="dispatchOperId" />
+		<result column="dispatch_oper_name" property="dispatchOperName" />
+		<result column="bind_user_id" property="bindUserId" />
+		<result column="long_time_flag" property="longTimeFlag" />
+		<result column="expire_date" property="expireDate" />
+		<result column="status" property="status" />
+		<result column="gmt_create" property="gmtCreate" />
+		<result column="gmt_modify" property="gmtModify" />
+	</resultMap>
+	
+	<insert id="insert" parameterType="ticket">
+	    insert into ticket (
+	        ticket_id,
+			ticket_code,
+	        ticket_price,
+	        long_time_flag,
+	        expire_date,
+	        status,
+	        gmt_create,
+	        gmt_modify
+	    ) values (
+	        #{ticketId},
+	        #{ticketCode},
+	        #{ticketPrice},
+	        #{longTimeFlag},
+	        #{expireDate},
+	        #{status},
+	        now(6),
+	        now(6)
+	    )
+	</insert>
+	
+	<select id="load" parameterType="map" resultMap="ticketResultMap">
+	    <include refid="sql_select"></include>
+	    from ticket where ticket_id = #{ticketId}
+	</select>
+
+	<select id="loadByCode" parameterType="map" resultMap="ticketResultMap">
+		<include refid="sql_select"></include>
+		from ticket where ticket_code = #{ticketCode}
+	</select>
+
+	<update id="updateStatus" parameterType="map">
+		update ticket set status = #{status}, gmt_modify = now(6) where ticket_id = #{ticketId}
+	</update>
+
+	<update id="updateDispatchOperIdByIds" parameterType="map">
+		update ticket set dispatch_oper_id = #{dispatchOperId}, dispatch_oper_name = #{dispatchOperName}, status = #{newStatus}, gmt_modify = now(6) where status = #{oldStatus} and ticket_id in
+		<foreach collection="ticketIdList" index="index" item="ticketId" open="(" separator="," close=")">#{ticketId}</foreach>
+	</update>
+
+	<select id="findByDispatchOperId" parameterType="map" resultMap="ticketResultMap">
+		<include refid="sql_select"/>
+		from ticket where dispatch_oper_id = #{dispatchOperId} and status = #{status}
+	</select>
+
+	<update id="updateBindUserId" parameterType="map">
+		update ticket set bind_user_id = #{bindUserId}, status = #{status}, gmt_modify = now(6) where ticket_id = #{ticketId}
+	</update>
+
+	<select id="findTicketByUserId" parameterType="map" resultMap="ticketResultMap">
+		<include refid="sql_select"/>
+		from ticket where bind_user_id = #{bindUserId} and status = #{status}
+	</select>
+
+	<update id="updateStatusForExpire" parameterType="map">
+		update ticket set status = #{newStatus}, gmt_modify = now(6) where status = #{oldStatus} and expire_date &lt; #{expireDate}
+	</update>
+
+	<select id="getTotalCountByCondition" parameterType="ticketQueryCondition" resultType="int">
+		select count(*)
+		<include refid="condition_sql_where"/>
+	</select>
+
+	<select id="findPaginationByCondition" parameterType="ticketQueryCondition" resultMap="ticketResultMap">
+		<include refid="sql_select"></include>
+		<include refid="condition_sql_where"/>
+		order by gmt_create desc
+		limit #{startRow}, #{pageSize}
+	</select>
+	
+	<sql id="sql_select">
+		select
+			ticket_id,
+			ticket_code,
+	        ticket_price,
+	        dispatch_oper_id,
+	        dispatch_oper_name,
+	        bind_user_id,
+	        long_time_flag,
+	        expire_date,
+	        status,
+	        gmt_create,
+	        gmt_modify
+	</sql>
+
+	<sql id="condition_sql_where">
+		from building
+		<where>
+			1 = 1
+		<if test="ticket_price != null">
+			and ticket_price = #{ticketPrice}
+		</if>
+		<if test="dispatch_oper_id != null">
+			and dispatch_oper_id = #{dispatchOperId}
+		</if>
+		<if test="bind_user_id != null">
+			and bind_user_id = #{bindUserId}
+		</if>
+		<if test="long_time_flag != null">
+			and long_time_flag = #{longTimeFlag}
+		</if>
+		<if test="status != null">
+			and status = #{status}
+		</if>
+		</where>
+	</sql>
+	
+</mapper>

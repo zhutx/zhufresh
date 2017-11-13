@@ -7,12 +7,9 @@ import com.moredian.bee.mybatis.convertor.PaginationConvertor;
 import com.moredian.bee.mybatis.domain.PaginationDomain;
 import com.moredian.bee.tube.annotation.SI;
 import com.moredian.zhufresh.domain.Favorite;
-import com.moredian.zhufresh.domain.Goods;
 import com.moredian.zhufresh.domain.Menu;
 import com.moredian.zhufresh.manager.FavoriteManager;
-import com.moredian.zhufresh.mapper.FavoriteMapper;
 import com.moredian.zhufresh.model.FavoriteInfo;
-import com.moredian.zhufresh.model.GoodsInfo;
 import com.moredian.zhufresh.model.MenuInfo;
 import com.moredian.zhufresh.request.FavoriteCreateRequest;
 import com.moredian.zhufresh.request.FavoriteUpdateRequest;
@@ -59,7 +56,7 @@ public class FavoriteServiceImpl implements FavoriteService {
     }
 
     private List<MenuInfo> menuListToMenuInfoList(List<Menu> menuList) {
-        if(org.springframework.util.CollectionUtils.isEmpty(menuList)) return new ArrayList<>();
+        if(CollectionUtils.isEmpty(menuList)) return new ArrayList<>();
         return BeanUtils.copyListProperties(MenuInfo.class, menuList);
     }
 

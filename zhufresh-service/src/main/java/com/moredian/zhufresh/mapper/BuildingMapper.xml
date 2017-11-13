@@ -114,7 +114,7 @@
 			and district_code = #{districtCode}
 		</if>
 		<if test="keywords != null">
-			and keywords like CONCAT('%', #{keywords}, '%'),
+			and keywords like CONCAT('%', #{keywords}, '%')
 		</if>
 		</where>
 	</sql>

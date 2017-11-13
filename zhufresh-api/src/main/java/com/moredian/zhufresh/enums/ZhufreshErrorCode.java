@@ -17,6 +17,10 @@ public enum ZhufreshErrorCode implements ErrorCode {
 
 	FAVORITE_CONTAINS_MENU(new V1ErrorCode(ErrorType.SERVICE, ErrorLevel.WARN, "021", "0002"), "该收藏夹下存在菜谱"),
 
+	TICKET_STATUS_FAIL(new V1ErrorCode(ErrorType.SERVICE, ErrorLevel.WARN, "021", "0002"), "菜票状态异常"),
+
+	NOT_YOUR_TICKET(new V1ErrorCode(ErrorType.SERVICE, ErrorLevel.WARN, "021", "0002"), "菜票归属异常"),
+
 	;
 
 	/** 错误码，不能为空 */

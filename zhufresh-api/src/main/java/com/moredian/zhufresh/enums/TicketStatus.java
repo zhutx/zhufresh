@@ -1,10 +1,12 @@
 package com.moredian.zhufresh.enums;
 
 public enum TicketStatus {
-	
-	UNUSED("未使用", 1),
-	USED("已使用", 2),
-	EXPIRE("已过期", 3),
+
+	NEW("新生成", 1),
+	DISPATCH("已分配配送员", 2),
+	UNUSED("已绑定用户", 3),
+	USED("已使用", 4),
+	EXPIRE("已过期", 5),
 	
 	;
 	
