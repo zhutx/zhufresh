@@ -8,6 +8,9 @@ public class Coupon {
 	private String couponCode;
 	private Integer couponPrice;
 	private Long bindUserId;
+	private Date bindDate;
+	private Date expireDate;
+	private Date useTime;
 	private Integer status;
 	private Date gmtCreate;
 	private Date gmtModify;
@@ -36,6 +39,31 @@ public class Coupon {
 	public void setBindUserId(Long bindUserId) {
 		this.bindUserId = bindUserId;
 	}
+
+	public Date getBindDate() {
+		return bindDate;
+	}
+
+	public void setBindDate(Date bindDate) {
+		this.bindDate = bindDate;
+	}
+
+	public Date getExpireDate() {
+		return expireDate;
+	}
+
+	public void setExpireDate(Date expireDate) {
+		this.expireDate = expireDate;
+	}
+
+	public Date getUseTime() {
+		return useTime;
+	}
+
+	public void setUseTime(Date useTime) {
+		this.useTime = useTime;
+	}
+
 	public Integer getStatus() {
 		return status;
 	}

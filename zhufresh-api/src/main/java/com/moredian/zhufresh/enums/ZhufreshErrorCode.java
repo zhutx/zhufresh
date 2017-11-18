@@ -21,6 +21,8 @@ public enum ZhufreshErrorCode implements ErrorCode {
 
 	NOT_YOUR_TICKET(new V1ErrorCode(ErrorType.SERVICE, ErrorLevel.WARN, "021", "0002"), "菜票归属异常"),
 
+	COUPON_CODE_FAIL(new V1ErrorCode(ErrorType.SERVICE, ErrorLevel.WARN, "021", "0002"), "无效优惠码"),
+
 	;
 
 	/** 错误码，不能为空 */

@@ -41,10 +41,6 @@ public class TicketManagerImpl implements TicketManager {
     @SI
     private IdgeneratorService idgeneratorService;
 
-    private Long genPrimaryKey(String name) {
-        return idgeneratorService.getNextIdByTypeName(name).getData();
-    }
-
     private BatchIdDto genBatchPrimaryKey(String name, int amount) {
         return idgeneratorService.getNextIdBatchBytypeName(name, amount).getData();
     }
