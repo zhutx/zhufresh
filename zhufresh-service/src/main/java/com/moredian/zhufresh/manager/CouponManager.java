@@ -9,7 +9,7 @@ import com.moredian.zhufresh.request.CouponQueryRequest;
 
 public interface CouponManager {
 
-    boolean batchCreateCoupon(Integer price, Integer amount);
+    boolean batchCreateCoupon(Integer couponPrice, Integer amount);
 
     boolean bindUser(Long userId, String couponCode);
 

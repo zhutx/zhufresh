@@ -26,8 +26,8 @@ public class CouponServiceImpl implements CouponService {
     private CouponManager couponManager;
 
     @Override
-    public ServiceResponse<Boolean> batchCreateCoupon(Integer price, Integer amount) {
-        boolean result = couponManager.batchCreateCoupon(price, amount);
+    public ServiceResponse<Boolean> batchCreateCoupon(Integer couponPrice, Integer amount) {
+        boolean result = couponManager.batchCreateCoupon(couponPrice, amount);
         return new ServiceResponse<>(true, null, result);
     }
 

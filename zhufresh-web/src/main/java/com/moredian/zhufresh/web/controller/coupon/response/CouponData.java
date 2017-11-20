@@ -1,11 +1,8 @@
-package com.moredian.zhufresh.model;
+package com.moredian.zhufresh.web.controller.coupon.response;
 
-import java.io.Serializable;
 import java.util.Date;
 
-public class CouponInfo implements Serializable {
-
-    private static final long serialVersionUID = 6974893806189854168L;
+public class CouponData {
 
     private Long couponId;
     private String couponCode;

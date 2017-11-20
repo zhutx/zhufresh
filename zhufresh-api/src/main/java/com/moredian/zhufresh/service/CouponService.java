@@ -12,7 +12,7 @@ import com.moredian.zhufresh.request.CouponQueryRequest;
  */
 public interface CouponService {
 
-    ServiceResponse<Boolean> batchCreateCoupon(Integer price, Integer amount);
+    ServiceResponse<Boolean> batchCreateCoupon(Integer couponPrice, Integer amount);
 
     ServiceResponse<Boolean> bindUser(Long userId, String couponCode);
 
