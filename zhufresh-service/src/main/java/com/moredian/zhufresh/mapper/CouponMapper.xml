@@ -105,5 +105,18 @@
 	        gmt_create,
 	        gmt_modify
 	</sql>
+
+	<sql id="condition_sql_where">
+		from coupon
+		<where>
+			1 = 1
+			<if test="beginTime != null and endTime !=null">
+				and use_time between #{beginTime} and #{endTime}
+			</if>
+			<if test="status != null">
+				and status = #{status}
+			</if>
+		</where>
+	</sql>
 	
 </mapper>

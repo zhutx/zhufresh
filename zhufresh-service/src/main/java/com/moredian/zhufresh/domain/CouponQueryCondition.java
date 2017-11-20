@@ -1,18 +1,29 @@
 package com.moredian.zhufresh.domain;
 
+import java.util.Date;
+
 public class CouponQueryCondition {
 
-    private String useDate;
+    private Date beginTime;
+    private Date endTime;
     private Integer status;
     private Integer startRow;
     private Integer pageSize;
 
-    public String getUseDate() {
-        return useDate;
+    public Date getBeginTime() {
+        return beginTime;
     }
 
-    public void setUseDate(String useDate) {
-        this.useDate = useDate;
+    public void setBeginTime(Date beginTime) {
+        this.beginTime = beginTime;
+    }
+
+    public Date getEndTime() {
+        return endTime;
+    }
+
+    public void setEndTime(Date endTime) {
+        this.endTime = endTime;
     }
 
     public Integer getStatus() {

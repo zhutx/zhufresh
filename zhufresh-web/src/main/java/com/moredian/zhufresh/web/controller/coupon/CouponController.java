@@ -18,7 +18,12 @@ import com.moredian.zhufresh.web.controller.goods.request.GoodsQueryModel;
 import com.moredian.zhufresh.web.controller.goods.response.GoodsData;
 import com.moredian.zhufresh.web.controller.goods.response.PaginationGoodsData;
 import com.moredian.zhufresh.web.controller.ticket.request.TicketLongTimeBatchCreateModel;
+import org.apache.commons.lang.StringUtils;
 import org.springframework.web.bind.annotation.*;
+
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
 
 @RestController
 @RequestMapping(value="/coupon")
@@ -27,7 +32,7 @@ public class CouponController {
     @SI
     private CouponService couponService;
 
-    @RequestMapping(value="/create", method= RequestMethod.POST)
+    @RequestMapping(value="/batchCreate", method= RequestMethod.POST)
     @ResponseBody
     public BaseResponse batchCreate(@RequestBody CouponBatchCreateModel model) {
         couponService.batchCreateCoupon(model.getCouponPrice(), model.getAmount()).pickDataThrowException();
@@ -77,10 +82,27 @@ public class CouponController {
 
     @RequestMapping(value="/list", method= RequestMethod.GET)
     @ResponseBody
-    public BaseResponse list(@RequestParam(value = "useDate", required = false) String useDate, @RequestParam(value = "status", required = false) Integer status) {
+    public BaseResponse list(@RequestParam(value = "beginDate", required = false) String beginDate, @RequestParam(value = "endDate", required = false) String endDate, @RequestParam(value = "status", required = false) Integer status) {
 
         CouponQueryModel model = new CouponQueryModel();
-        model.setUseDate(useDate);
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+        if (StringUtils.isNotBlank(beginDate)) {
+            try {
+                model.setBeginTime(sdf.parse(beginDate));
+            } catch (ParseException e) {
+                e.printStackTrace();
+            }
+        }
+        if (StringUtils.isNotBlank(endDate)) {
+            try {
+                Calendar calendar = Calendar.getInstance();
+                calendar.setTime(sdf.parse(endDate));
+                calendar.add(Calendar.DATE, 1);
+                model.setEndTime(calendar.getTime());
+            } catch (ParseException e) {
+                e.printStackTrace();
+            }
+        }
         model.setStatus(status);
 
         Pagination<CouponInfo> pagination = couponService.searchCoupon(this.buildRequest(model), this.buildPagination(model.getPageNo(), model.getPageSize()));

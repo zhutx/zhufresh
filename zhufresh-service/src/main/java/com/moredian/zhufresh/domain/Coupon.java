@@ -11,6 +11,7 @@ public class Coupon {
 	private Date bindDate;
 	private Date expireDate;
 	private Date useTime;
+	private Long orderId;
 	private Integer status;
 	private Date gmtCreate;
 	private Date gmtModify;
@@ -62,6 +63,14 @@ public class Coupon {
 
 	public void setUseTime(Date useTime) {
 		this.useTime = useTime;
+	}
+
+	public Long getOrderId() {
+		return orderId;
+	}
+
+	public void setOrderId(Long orderId) {
+		this.orderId = orderId;
 	}
 
 	public Integer getStatus() {

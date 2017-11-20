@@ -1,20 +1,30 @@
 package com.moredian.zhufresh.request;
 
 import java.io.Serializable;
+import java.util.Date;
 
 public class CouponQueryRequest implements Serializable {
 
     private static final long serialVersionUID = 3718877887294853283L;
 
-    private String useDate;
+    private Date beginTime;
+    private Date endTime;
     private Integer status;
 
-    public String getUseDate() {
-        return useDate;
+    public Date getBeginTime() {
+        return beginTime;
     }
 
-    public void setUseDate(String useDate) {
-        this.useDate = useDate;
+    public void setBeginTime(Date beginTime) {
+        this.beginTime = beginTime;
+    }
+
+    public Date getEndTime() {
+        return endTime;
+    }
+
+    public void setEndTime(Date endTime) {
+        this.endTime = endTime;
     }
 
     public Integer getStatus() {

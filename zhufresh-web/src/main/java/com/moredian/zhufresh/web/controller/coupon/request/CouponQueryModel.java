@@ -2,17 +2,28 @@ package com.moredian.zhufresh.web.controller.coupon.request;
 
 import com.moredian.zhufresh.web.model.PageModel;
 
+import java.util.Date;
+
 public class CouponQueryModel extends PageModel{
 
-    private String useDate;
+    private Date beginTime;
+    private Date endTime;
     private Integer status;
 
-    public String getUseDate() {
-        return useDate;
+    public Date getBeginTime() {
+        return beginTime;
     }
 
-    public void setUseDate(String useDate) {
-        this.useDate = useDate;
+    public void setBeginTime(Date beginTime) {
+        this.beginTime = beginTime;
+    }
+
+    public Date getEndTime() {
+        return endTime;
+    }
+
+    public void setEndTime(Date endTime) {
+        this.endTime = endTime;
     }
 
     public Integer getStatus() {
