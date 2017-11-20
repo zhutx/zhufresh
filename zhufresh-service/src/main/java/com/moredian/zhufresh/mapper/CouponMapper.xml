@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+
+<mapper namespace="com.moredian.zhufresh.mapper.CouponMapper" >
+
+    <resultMap id="couponResultMap" type="coupon">
+		<result column="coupon_id" property="couponId" />
+		<result column="coupon_code" property="couponCode" />
+		<result column="coupon_price" property="couponPrice" />
+		<result column="expire_date" property="expireDate" />
+		<result column="bind_user_id" property="bindUserId" />
+		<result column="use_time" property="useTime" />
+		<result column="order_id" property="orderId" />
+		<result column="status" property="status" />
+		<result column="gmt_create" property="gmtCreate" />
+		<result column="gmt_modify" property="gmtModify" />
+	</resultMap>
+	
+	<insert id="insert" parameterType="coupon">
+	    insert into coupon (
+	        coupon_id,
+			coupon_code,
+	        coupon_price,
+	        status,
+	        gmt_create,
+	        gmt_modify
+	    ) values (
+	        #{couponId},
+	        #{couponCode},
+	        #{couponPrice},
+	        #{status},
+	        now(6),
+	        now(6)
+	    )
+	</insert>
+
+	<select id="loadByCode" parameterType="map" resultMap="couponResultMap">
+        <include refid="sql_select"/>
+		from coupon where coupon_code = #{couponCode}
+	</select>
+	
+	<update id="bindUser" parameterType="coupon">
+		update coupon
+		<set>
+			expire_date = #{expireDate},
+			bind_user_id = #{bindUserId},
+			status = #{status},
+			gmt_modify = now(6)
+		</set>
+		where coupon_id = #{couponId}
+	</update>
+
+	<select id="loadForUse" parameterType="map" resultMap="couponResultMap">
+		<include refid="sql_select"/>
+		from coupon where bind_user_id = #{bindUserId} and status = #{status} order by gmt_create limit 1
+	</select>
+
+	<update id="updateByUse" parameterType="map">
+		update coupon
+		<set>
+			use_time = #{useTime},
+			order_id = #{orderId},
+			status = #{status},
+			gmt_modify = now(6)
+		</set>
+		where coupon_id = #{couponId} and bind_user_id = #{bindUserId}
+	</update>
+
+	<update id="updateByExpire" parameterType="map">
+		update coupon
+		<set>
+			status = #{status},
+			gmt_modify = #{gmtModify}
+		</set>
+		where expire_date &lt; now(6)
+	</update>
+	
+	<select id="load" parameterType="map" resultMap="couponResultMap">
+	    <include refid="sql_select"></include>
+	    from coupon where coupon_id = #{couponId}
+	</select>
+
+	<select id="getTotalCountByCondition" parameterType="couponQueryCondition" resultType="int">
+		select count(*)
+		<include refid="condition_sql_where"/>
+	</select>
+
+	<select id="findPaginationByCondition" parameterType="couponQueryCondition" resultMap="couponResultMap">
+		<include refid="sql_select"></include>
+		<include refid="condition_sql_where"/>
+		order by gmt_create desc
+		limit #{startRow}, #{pageSize}
+	</select>
+	
+	<sql id="sql_select">
+		select
+			coupon_id,
+			coupon_code,
+	        coupon_price,
+	        expire_date,
+	        bind_user_id,
+	        use_time,
+	        order_id,
+	        status,
+	        gmt_create,
+	        gmt_modify
+	</sql>
+	
+</mapper>

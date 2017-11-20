@@ -15,13 +15,13 @@ public interface CouponMapper {
 
     int insert(Coupon coupon);
 
-    Coupon loadByCode(String couponCode);
+    Coupon loadByCode(@Param("couponCode") String couponCode);
 
     int bindUser(Coupon coupon);
 
-    Coupon loadForUse(@Param("userId") Long userId, @Param("status") Integer status);
+    Coupon loadForUse(@Param("bindUserId") Long userId, @Param("status") Integer status);
 
-    int updateByUse(@Param("couponId") Long couponId, @Param("userId") Long userId, @Param("orderId") Long orderId, @Param("useTime") Date useTime, @Param("status") Integer status);
+    int updateByUse(@Param("couponId") Long couponId, @Param("bindUserId") Long userId, @Param("orderId") Long orderId, @Param("useTime") Date useTime, @Param("status") Integer status);
 
     int updateByExpire(@Param("status") Integer status);
 
