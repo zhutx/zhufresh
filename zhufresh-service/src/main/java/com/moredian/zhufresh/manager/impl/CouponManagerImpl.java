@@ -137,4 +137,10 @@ public class CouponManagerImpl implements CouponManager {
     public Coupon getCouponByCode(Long userId, String couponCode) {
         return couponMapper.loadByCodeForUser(userId, couponCode, CouponStatus.ENABLE.getValue());
     }
+
+    @Override
+    public boolean updateByUse(Long couponId, Long orderId, String orderCode) {
+        couponMapper.updateByUse(couponId, orderId, orderCode, CouponStatus.USED.getValue());
+        return true;
+    }
 }

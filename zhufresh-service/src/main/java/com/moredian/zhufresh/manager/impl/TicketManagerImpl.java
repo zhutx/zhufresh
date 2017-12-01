@@ -209,4 +209,10 @@ public class TicketManagerImpl implements TicketManager {
         BizAssert.notBlank(ticketCode, "ticketCode is required");
         return ticketMapper.loadByCodeForUser(userId, ticketCode, TicketStatus.UNUSED.getValue());
     }
+
+    @Override
+    public boolean updateByUse(Long ticketId, Long orderId, String orderCode) {
+        ticketMapper.updateByUse(ticketId, orderId, orderCode, TicketStatus.USED.getValue());
+        return true;
+    }
 }

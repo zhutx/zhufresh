@@ -31,4 +31,6 @@ public interface CouponMapper {
 
     Coupon loadByCodeForUser(@Param("bindUserId") Long userId, @Param("couponCode") String couponCode, @Param("status") Integer status);
 
+    int updateByUse(@Param("couponId") Long couponId, @Param("orderId") Long orderId, @Param("couponCode") String orderCode, @Param("status") Integer status);
+
 }

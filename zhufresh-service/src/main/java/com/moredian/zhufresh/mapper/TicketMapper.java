@@ -35,4 +35,6 @@ public interface TicketMapper {
 
     List<Ticket> findPaginationByCondition(TicketQueryCondition condition);
 
+    int updateByUse(@Param("ticketId") Long ticketId, @Param("orderId") Long orderId, @Param("orderCode") String orderCode, @Param("status") Integer status);
+
 }

@@ -31,4 +31,6 @@ public interface TicketManager {
 
     Ticket getTicketByCode(Long userId, String ticketCode);
 
+    boolean updateByUse(Long ticketId, Long orderId, String orderCode);
+
 }

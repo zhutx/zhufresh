@@ -85,6 +85,10 @@
 	    from coupon where coupon_id = #{couponId}
 	</select>
 
+	<update id="updateByUse" parameterType="map">
+		update coupon set order_id = #{orderId}, order_code = #{orderCode}, use_time = now(6), status = #{status}, gmt_modify = now(6) where coupon_id = #{couponId}
+	</update>
+
 	<select id="getTotalCountByCondition" parameterType="couponQueryCondition" resultType="int">
 		select count(*)
 		<include refid="condition_sql_where"/>

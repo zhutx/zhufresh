@@ -23,4 +23,6 @@ public interface CouponManager {
 
     Coupon getCouponByCode(Long userId, String couponCode);
 
+    boolean updateByUse(Long couponId, Long orderId, String orderCode);
+
 }

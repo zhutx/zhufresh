@@ -8,9 +8,9 @@ import com.moredian.idgenerator.service.IdgeneratorService;
 import com.moredian.zhufresh.config.ServiceProperties;
 import com.moredian.zhufresh.domain.*;
 import com.moredian.zhufresh.enums.OrderStatus;
+import com.moredian.zhufresh.enums.OrderType;
 import com.moredian.zhufresh.enums.ZhufreshErrorCode;
 import com.moredian.zhufresh.manager.*;
-import com.moredian.zhufresh.mapper.AddressMapper;
 import com.moredian.zhufresh.mapper.OrderGoodsMapper;
 import com.moredian.zhufresh.mapper.OrderMapper;
 import com.moredian.zhufresh.request.OrderCreateRequest;
@@ -92,17 +92,24 @@ public class OrderManagerImpl implements OrderManager {
         this.fillOrderGoodsInfo(order, orderGoodsList);
         order.setOrderServicePrice(this.getOrderServicePrice(order.getOrderGoodsPrice()));
         order.setTicketPrice(0);
-        if (StringUtils.isNotBlank(request.getTicketCode())) {
-            Ticket ticket = ticketManager.getTicketByCode(request.getUserId(), request.getTicketCode());
-            order.setTicketCode(request.getTicketCode());
-            order.setTicketPrice(ticket.getTicketPrice());
-        }
         order.setCouponPrice(0);
-        if (StringUtils.isNotBlank(request.getCouponCode())) {
-            Coupon coupon = couponManager.getCouponByCode(request.getUserId(), request.getCouponCode());
-            order.setCouponCode(request.getCouponCode());
-            order.setCouponPrice(coupon.getCouponPrice());
+
+        if (OrderType.MARKET.getValue() == order.getOrderType()) {
+            if (StringUtils.isNotBlank(request.getTicketCode())) {
+                Ticket ticket = ticketManager.getTicketByCode(request.getUserId(), request.getTicketCode());
+                order.setTicketCode(request.getTicketCode());
+                order.setTicketPrice(ticket.getTicketPrice());
+                ticketManager.updateByUse(ticket.getTicketId(), order.getOrderId(), order.getOrderCode());
+            }
+
+            if (StringUtils.isNotBlank(request.getCouponCode())) {
+                Coupon coupon = couponManager.getCouponByCode(request.getUserId(), request.getCouponCode());
+                order.setCouponCode(request.getCouponCode());
+                order.setCouponPrice(coupon.getCouponPrice());
+                couponManager.updateByUse(coupon.getCouponId(), order.getOrderId(), order.getOrderCode());
+            }
         }
+
         order.setPayPrice(getPayPrice(order));
         order.setOrderMessage(request.getOrderMessage());
         order.setReceiveUserId(request.getUserId());
