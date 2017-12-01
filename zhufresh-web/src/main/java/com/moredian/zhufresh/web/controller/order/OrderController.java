@@ -7,7 +7,7 @@ import com.moredian.bee.tube.annotation.SI;
 import com.moredian.zhufresh.request.OrderCreateRequest;
 import com.moredian.zhufresh.service.OrderService;
 import com.moredian.zhufresh.web.BaseController;
-import com.moredian.zhufresh.web.controller.menu.request.MenuCreateModel;
+import com.moredian.zhufresh.web.controller.order.request.OrderCreateModel;
 import org.springframework.web.bind.annotation.*;
 
 @RestController

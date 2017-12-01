@@ -53,7 +53,7 @@
 
 	<select id="loadByCodeForUser" parameterType="map" resultMap="ticketResultMap">
 		<include refid="sql_select"></include>
-		from ticket where ticket_code = #{ticketCode} and bing_user_id = #{bindUserId} and status = #{status}
+		from ticket where ticket_code = #{ticketCode} and bind_user_id = #{bindUserId} and status = #{status}
 	</select>
 
 	<update id="updateStatus" parameterType="map">

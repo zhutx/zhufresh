@@ -21,8 +21,6 @@ public interface CouponMapper {
 
     Coupon loadForUse(@Param("bindUserId") Long userId, @Param("status") Integer status);
 
-    int updateByUse(@Param("couponId") Long couponId, @Param("bindUserId") Long userId, @Param("orderId") Long orderId, @Param("useTime") Date useTime, @Param("status") Integer status);
-
     int updateByExpire(@Param("status") Integer status);
 
     int getTotalCountByCondition(CouponQueryCondition condition);
@@ -31,6 +29,6 @@ public interface CouponMapper {
 
     Coupon loadByCodeForUser(@Param("bindUserId") Long userId, @Param("couponCode") String couponCode, @Param("status") Integer status);
 
-    int updateByUse(@Param("couponId") Long couponId, @Param("orderId") Long orderId, @Param("couponCode") String orderCode, @Param("status") Integer status);
+    int updateByUse(@Param("couponId") Long couponId, @Param("orderId") Long orderId, @Param("orderCode") String orderCode, @Param("status") Integer status);
 
 }

@@ -9,22 +9,21 @@ import com.moredian.bee.mybatis.domain.PaginationDomain;
 import com.moredian.bee.tube.annotation.SI;
 import com.moredian.idgenerator.dto.BatchIdDto;
 import com.moredian.idgenerator.service.IdgeneratorService;
-import com.moredian.zhufresh.domain.*;
+import com.moredian.zhufresh.domain.Coupon;
+import com.moredian.zhufresh.domain.CouponQueryCondition;
+import com.moredian.zhufresh.domain.Ticket;
 import com.moredian.zhufresh.enums.CouponStatus;
 import com.moredian.zhufresh.enums.ZhufreshErrorCode;
 import com.moredian.zhufresh.manager.CouponManager;
 import com.moredian.zhufresh.mapper.CouponMapper;
 import com.moredian.zhufresh.model.CouponInfo;
-import com.moredian.zhufresh.model.GoodsInfo;
 import com.moredian.zhufresh.request.CouponQueryRequest;
-import com.moredian.zhufresh.request.GoodsQueryRequest;
 import org.apache.commons.lang.RandomStringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Calendar;
-import java.util.Date;
 
 @Service
 public class CouponManagerImpl implements CouponManager {
@@ -118,13 +117,6 @@ public class CouponManagerImpl implements CouponManager {
     @Override
     public Coupon getOneCoupon(Long userId) {
         return couponMapper.loadForUse(userId, CouponStatus.ENABLE.getValue());
-    }
-
-    @Override
-    public boolean useOneCoupon(Long couponId, Long userId, Long orderId) {
-        Date useTime = new Date();
-        couponMapper.updateByUse(couponId, userId, orderId, useTime, CouponStatus.USED.getValue());
-        return true;
     }
 
     @Override

@@ -20,7 +20,7 @@ public class Order {
 	private Long deliveryOperId;
 	private String deliveryOperName;
 	private String deliveryMobile;
-	private Long receiveUserId;
+	private Long userId;
 	private String receiveName;
 	private String receiveMobile;
 	private String receiveAddress;
@@ -137,12 +137,15 @@ public class Order {
 	public void setDeliveryMobile(String deliveryMobile) {
 		this.deliveryMobile = deliveryMobile;
 	}
-	public Long getReceiveUserId() {
-		return receiveUserId;
+
+	public Long getUserId() {
+		return userId;
 	}
-	public void setReceiveUserId(Long receiveUserId) {
-		this.receiveUserId = receiveUserId;
+
+	public void setUserId(Long userId) {
+		this.userId = userId;
 	}
+
 	public String getReceiveName() {
 		return receiveName;
 	}

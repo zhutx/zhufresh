@@ -5,7 +5,7 @@
 
 	
 	<insert id="insert" parameterType="order">
-	    insert into order (
+	    insert into orders (
 			order_id,
 			order_code,
 			order_type,
@@ -46,7 +46,6 @@
 			#{receiveAddress},
 			#{receiveExpectBeginTime},
 			#{receiveExpectEndTime},
-			#{receiveExpectTime},
 			#{status},
 	        now(6),
 	        now(6)

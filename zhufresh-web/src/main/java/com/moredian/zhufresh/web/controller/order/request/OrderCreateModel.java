@@ -1,8 +1,7 @@
-package com.moredian.zhufresh.web.controller.order;
+package com.moredian.zhufresh.web.controller.order.request;
 
 import com.moredian.zhufresh.request.OrderGoodsRequest;
 
-import java.util.Date;
 import java.util.List;
 
 public class OrderCreateModel {
@@ -13,7 +12,7 @@ public class OrderCreateModel {
     private String orderMessage;
     private Long userId;
     private Long addressId;
-    private Date receiveExpectTime;
+    private String receiveExpectTime;
 
     private List<OrderGoodsRequest> goods;
 
@@ -65,11 +64,11 @@ public class OrderCreateModel {
         this.addressId = addressId;
     }
 
-    public Date getReceiveExpectTime() {
+    public String getReceiveExpectTime() {
         return receiveExpectTime;
     }
 
-    public void setReceiveExpectTime(Date receiveExpectTime) {
+    public void setReceiveExpectTime(String receiveExpectTime) {
         this.receiveExpectTime = receiveExpectTime;
     }
 

@@ -60,17 +60,6 @@
 		from coupon where bind_user_id = #{bindUserId} and status = #{status} order by gmt_create limit 1
 	</select>
 
-	<update id="updateByUse" parameterType="map">
-		update coupon
-		<set>
-			use_time = #{useTime},
-			order_id = #{orderId},
-			status = #{status},
-			gmt_modify = now(6)
-		</set>
-		where coupon_id = #{couponId} and bind_user_id = #{bindUserId}
-	</update>
-
 	<update id="updateByExpire" parameterType="map">
 		update coupon
 		<set>

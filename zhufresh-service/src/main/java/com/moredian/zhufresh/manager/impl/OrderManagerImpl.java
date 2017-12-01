@@ -7,6 +7,7 @@ import com.moredian.bee.tube.annotation.SI;
 import com.moredian.idgenerator.service.IdgeneratorService;
 import com.moredian.zhufresh.config.ServiceProperties;
 import com.moredian.zhufresh.domain.*;
+import com.moredian.zhufresh.enums.GoodsUnit;
 import com.moredian.zhufresh.enums.OrderStatus;
 import com.moredian.zhufresh.enums.OrderType;
 import com.moredian.zhufresh.enums.ZhufreshErrorCode;
@@ -15,6 +16,7 @@ import com.moredian.zhufresh.mapper.OrderGoodsMapper;
 import com.moredian.zhufresh.mapper.OrderMapper;
 import com.moredian.zhufresh.request.OrderCreateRequest;
 import com.moredian.zhufresh.request.OrderGoodsRequest;
+import com.moredian.zhufresh.service.OrderService;
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.lang.RandomStringUtils;
 import org.apache.commons.lang.StringUtils;
@@ -115,7 +117,7 @@ public class OrderManagerImpl implements OrderManager {
 
         order.setPayPrice(getPayPrice(order));
         order.setOrderMessage(request.getOrderMessage());
-        order.setReceiveUserId(request.getUserId());
+        order.setUserId(request.getUserId());
         Address address = this.getReceiveAddress(request.getUserId(), request.getAddressId());
         Building building = this.getReceiveBuilding(address.getBuildingId());
         order.setReceiveName(address.getReceiveName());
@@ -132,7 +134,12 @@ public class OrderManagerImpl implements OrderManager {
         }
         order.setReceiveExpectBeginTime(receiveExpectBeginTime);
         order.setReceiveExpectEndTime(receiveExpectEndTime);
-        order.setStatus(OrderStatus.NEW.getValue());
+        if (order.getPayPrice() > 0) {
+            order.setStatus(OrderStatus.NEW.getValue());
+        } else {
+            order.setStatus(OrderStatus.PAY.getValue());
+        }
+
         return order;
     }
 
@@ -145,7 +152,12 @@ public class OrderManagerImpl implements OrderManager {
             orderGoods.setGoodsType2Id(goods.getGoodsType2Id());
             orderGoods.setGoodsName(goods.getGoodsName());
             orderGoods.setUnitPrice(goods.getGoodsUnitPrice());
-            orderGoods.setPrice(orderGoods.getUnitPrice() * orderGoods.getWeight());
+            if (GoodsUnit.JIN.getValue() == goods.getGoodsUnit()) {
+                orderGoods.setPrice(orderGoods.getUnitPrice() * orderGoods.getWeight() / 10);
+            } else {
+                orderGoods.setPrice(orderGoods.getUnitPrice() * orderGoods.getWeight());
+            }
+
         }
         return orderGoodsList;
     }
