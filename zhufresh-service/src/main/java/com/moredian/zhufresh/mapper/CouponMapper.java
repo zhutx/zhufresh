@@ -29,4 +29,6 @@ public interface CouponMapper {
 
     List<Coupon> findPaginationByCondition(CouponQueryCondition condition);
 
+    Coupon loadByCodeForUser(@Param("bindUserId") Long userId, @Param("couponCode") String couponCode, @Param("status") Integer status);
+
 }

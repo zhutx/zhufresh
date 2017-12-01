@@ -28,4 +28,6 @@ public interface BuildingManager {
     boolean configDeliver(DeliverConfigRequest request);
 
     List<DeliverConfig> searchDeliverConfig(Long buildingId, String theDay);
+
+    Building getBuilding(Long buildingId);
 }

@@ -38,6 +38,11 @@
         <include refid="sql_select"/>
 		from coupon where coupon_code = #{couponCode}
 	</select>
+
+	<select id="loadByCodeForUser" parameterType="map" resultMap="couponResultMap">
+		<include refid="sql_select"/>
+		from coupon where coupon_code = #{couponCode} and bind_user_id = #{bindUserId} and status = #{status}
+	</select>
 	
 	<update id="bindUser" parameterType="coupon">
 		update coupon

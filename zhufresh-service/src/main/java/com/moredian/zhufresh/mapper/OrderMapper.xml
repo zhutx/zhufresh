@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+
+<mapper namespace="com.moredian.zhufresh.mapper.OrderMapper" >
+
+	
+	<insert id="insert" parameterType="order">
+	    insert into order (
+			order_id,
+			order_code,
+			order_type,
+			order_goods_price,
+			order_service_price,
+			order_goods_size,
+			ticket_code,
+			ticket_price,
+			coupon_code,
+			coupon_price,
+			order_message,
+			pay_price,
+			user_id,
+			receive_name,
+			receive_mobile,
+			receive_address,
+			receive_expect_time,
+			status,
+	        gmt_create,
+	        gmt_modify
+	    ) values (
+			#{orderId},
+			#{orderCode},
+			#{orderType},
+			#{orderGoodsPrice},
+			#{orderServicePrice},
+			#{orderGoodsSize},
+			#{ticketCode},
+			#{ticketPrice},
+			#{couponCode},
+			#{couponPrice},
+			#{orderMessage},
+			#{payPrice},
+			#{userId},
+			#{receiveName},
+			#{receiveMobile},
+			#{receiveAddress},
+			#{receiveExpectTime},
+			#{status},
+	        now(6),
+	        now(6)
+	    )
+	</insert>
+	
+</mapper>

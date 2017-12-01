@@ -19,6 +19,8 @@ public interface TicketMapper {
 
     Ticket loadByCode(@Param("ticketCode") String ticketCode);
 
+    Ticket loadByCodeForUser(@Param("bindUserId") Long userId, @Param("ticketCode") String ticketCode, @Param("status") Integer status);
+
     int updateBindUserId(@Param("ticketId") Long ticketId, @Param("bindUserId") Long userId, @Param("status") Integer status);
 
     Ticket load(@Param("ticketId") Long ticketId);

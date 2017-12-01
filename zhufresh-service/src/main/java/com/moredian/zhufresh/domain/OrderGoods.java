@@ -7,8 +7,8 @@ public class OrderGoods {
 	private Long orderGoodsId;
 	private Long orderId;
 	private Long goodsId;
-	private Integer goodsType1;
-	private Integer goodsType2;
+	private Integer goodsType1Id;
+	private Integer goodsType2Id;
 	private String goodsName;
 	private Integer unitPrice;
 	private Integer weight;
@@ -36,18 +36,23 @@ public class OrderGoods {
 	public void setGoodsId(Long goodsId) {
 		this.goodsId = goodsId;
 	}
-	public Integer getGoodsType1() {
-		return goodsType1;
+
+	public Integer getGoodsType1Id() {
+		return goodsType1Id;
 	}
-	public void setGoodsType1(Integer goodsType1) {
-		this.goodsType1 = goodsType1;
+
+	public void setGoodsType1Id(Integer goodsType1Id) {
+		this.goodsType1Id = goodsType1Id;
 	}
-	public Integer getGoodsType2() {
-		return goodsType2;
+
+	public Integer getGoodsType2Id() {
+		return goodsType2Id;
 	}
-	public void setGoodsType2(Integer goodsType2) {
-		this.goodsType2 = goodsType2;
+
+	public void setGoodsType2Id(Integer goodsType2Id) {
+		this.goodsType2Id = goodsType2Id;
 	}
+
 	public String getGoodsName() {
 		return goodsName;
 	}

@@ -21,4 +21,6 @@ public interface CouponManager {
 
     boolean autoExpire();
 
+    Coupon getCouponByCode(Long userId, String couponCode);
+
 }

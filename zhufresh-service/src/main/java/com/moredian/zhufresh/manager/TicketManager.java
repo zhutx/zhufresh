@@ -29,4 +29,6 @@ public interface TicketManager {
 
     boolean autoExpire();
 
+    Ticket getTicketByCode(Long userId, String ticketCode);
+
 }

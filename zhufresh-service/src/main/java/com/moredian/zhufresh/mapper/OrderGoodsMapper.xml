@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+
+<mapper namespace="com.moredian.zhufresh.mapper.OrderGoodsMapper" >
+
+	
+	<insert id="insert" parameterType="orderGoods">
+	    insert into order_goods (
+			order_goods_id,
+			order_id,
+			goods_id,
+			goods_type1_id,
+			goods_type2_id,
+			goods_name,
+			unit_price,
+			weight,
+			price,
+			receive_weight,
+			receive_price,
+	        gmt_create,
+	        gmt_modify
+	    ) values (
+	        #{orderGoodsId},
+	        #{orderId},
+	        #{goodsId},
+	        #{goodsType1Id},
+	        #{goodsType2Id},
+	        #{goodsName},
+	        #{unitPrice},
+	        #{weight},
+	        #{price},
+	        #{receiveWeight},
+	        #{receivePrice},
+	        now(6),
+	        now(6)
+	    )
+	</insert>
+	
+</mapper>

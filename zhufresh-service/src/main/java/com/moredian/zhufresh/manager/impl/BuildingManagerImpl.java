@@ -160,4 +160,8 @@ public class BuildingManagerImpl implements BuildingManager {
         return deliverConfigMapper.findByBuildingId(buildingId, theDay);
     }
 
+    @Override
+    public Building getBuilding(Long buildingId) {
+        return buildingMapper.load(buildingId);
+    }
 }

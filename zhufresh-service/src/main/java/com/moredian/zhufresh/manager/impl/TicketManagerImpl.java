@@ -203,4 +203,10 @@ public class TicketManagerImpl implements TicketManager {
         return true;
     }
 
+    @Override
+    public Ticket getTicketByCode(Long userId, String ticketCode) {
+        BizAssert.notNull(userId, "userId is required");
+        BizAssert.notBlank(ticketCode, "ticketCode is required");
+        return ticketMapper.loadByCodeForUser(userId, ticketCode, TicketStatus.UNUSED.getValue());
+    }
 }

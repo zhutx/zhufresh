@@ -132,4 +132,9 @@ public class CouponManagerImpl implements CouponManager {
         couponMapper.updateByExpire(CouponStatus.EXPIRE.getValue());
         return true;
     }
+
+    @Override
+    public Coupon getCouponByCode(Long userId, String couponCode) {
+        return couponMapper.loadByCodeForUser(userId, couponCode, CouponStatus.ENABLE.getValue());
+    }
 }

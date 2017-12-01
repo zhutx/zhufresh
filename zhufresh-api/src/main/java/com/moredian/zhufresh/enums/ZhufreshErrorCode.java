@@ -23,6 +23,8 @@ public enum ZhufreshErrorCode implements ErrorCode {
 
 	COUPON_CODE_FAIL(new V1ErrorCode(ErrorType.SERVICE, ErrorLevel.WARN, "021", "0002"), "无效优惠码"),
 
+	ORDER_NO_GOODS(new V1ErrorCode(ErrorType.SERVICE, ErrorLevel.WARN, "021", "0002"), "无商品信息"),
+
 	;
 
 	/** 错误码，不能为空 */
