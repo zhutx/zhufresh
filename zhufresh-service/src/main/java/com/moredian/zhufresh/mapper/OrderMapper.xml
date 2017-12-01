@@ -22,7 +22,8 @@
 			receive_name,
 			receive_mobile,
 			receive_address,
-			receive_expect_time,
+			receive_expect_begin_time,
+			receive_expect_end_time,
 			status,
 	        gmt_create,
 	        gmt_modify
@@ -43,6 +44,8 @@
 			#{receiveName},
 			#{receiveMobile},
 			#{receiveAddress},
+			#{receiveExpectBeginTime},
+			#{receiveExpectEndTime},
 			#{receiveExpectTime},
 			#{status},
 	        now(6),

@@ -1,12 +1,11 @@
-package com.moredian.zhufresh.request;
+package com.moredian.zhufresh.web.controller.order;
 
-import java.io.Serializable;
+import com.moredian.zhufresh.request.OrderGoodsRequest;
+
 import java.util.Date;
 import java.util.List;
 
-public class OrderCreateRequest implements Serializable {
-
-    private static final long serialVersionUID = 5302943358207448823L;
+public class OrderCreateModel {
 
     private Integer orderType;
     private String ticketCode;
@@ -14,7 +13,7 @@ public class OrderCreateRequest implements Serializable {
     private String orderMessage;
     private Long userId;
     private Long addressId;
-    private String receiveExpectTime;
+    private Date receiveExpectTime;
 
     private List<OrderGoodsRequest> goods;
 
@@ -66,11 +65,11 @@ public class OrderCreateRequest implements Serializable {
         this.addressId = addressId;
     }
 
-    public String getReceiveExpectTime() {
+    public Date getReceiveExpectTime() {
         return receiveExpectTime;
     }
 
-    public void setReceiveExpectTime(String receiveExpectTime) {
+    public void setReceiveExpectTime(Date receiveExpectTime) {
         this.receiveExpectTime = receiveExpectTime;
     }
 

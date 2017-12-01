@@ -22,6 +22,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 
 @Service
@@ -118,7 +121,17 @@ public class OrderManagerImpl implements OrderManager {
         order.setReceiveName(address.getReceiveName());
         order.setReceiveMobile(address.getMobile());
         order.setReceiveAddress(building.getBuildingName()+" "+address.getAddressInfo());
-        order.setReceiveExpectTime(request.getReceiveExpectTime());
+        SimpleDateFormat sdf = new SimpleDateFormat("HH:mm");
+        Date receiveExpectBeginTime = null;
+        Date receiveExpectEndTime = null;
+        try {
+            receiveExpectBeginTime = sdf.parse(request.getReceiveExpectTime().split("-")[0]);
+            receiveExpectEndTime = sdf.parse(request.getReceiveExpectTime().split("-")[1]);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        order.setReceiveExpectBeginTime(receiveExpectBeginTime);
+        order.setReceiveExpectEndTime(receiveExpectEndTime);
         order.setStatus(OrderStatus.NEW.getValue());
         return order;
     }
@@ -143,7 +156,7 @@ public class OrderManagerImpl implements OrderManager {
         BizAssert.notNull(request.getOrderType(), "orderType is required");
         BizAssert.notNull(request.getUserId(), "userId is required");
         BizAssert.notNull(request.getAddressId(), "addressId is required");
-        BizAssert.notNull(request.getReceiveExpectTime(), "receiveExpectTime is required");
+        BizAssert.notBlank(request.getReceiveExpectTime(), "receiveExpectTime is required");
 
         if (CollectionUtils.isEmpty(request.getGoods())) ExceptionUtils.throwException(ZhufreshErrorCode.ORDER_NO_GOODS, ZhufreshErrorCode.ORDER_NO_GOODS.getMessage());
 

@@ -24,7 +24,8 @@ public class Order {
 	private String receiveName;
 	private String receiveMobile;
 	private String receiveAddress;
-	private Date receiveExpectTime;
+	private Date receiveExpectBeginTime;
+	private Date receiveExpectEndTime;
 	private Integer needRefundFlag;
 	private Integer refundType;
 	private Integer overRefundFlag;
@@ -160,12 +161,23 @@ public class Order {
 	public void setReceiveAddress(String receiveAddress) {
 		this.receiveAddress = receiveAddress;
 	}
-	public Date getReceiveExpectTime() {
-		return receiveExpectTime;
+
+	public Date getReceiveExpectBeginTime() {
+		return receiveExpectBeginTime;
 	}
-	public void setReceiveExpectTime(Date receiveExpectTime) {
-		this.receiveExpectTime = receiveExpectTime;
+
+	public void setReceiveExpectBeginTime(Date receiveExpectBeginTime) {
+		this.receiveExpectBeginTime = receiveExpectBeginTime;
 	}
+
+	public Date getReceiveExpectEndTime() {
+		return receiveExpectEndTime;
+	}
+
+	public void setReceiveExpectEndTime(Date receiveExpectEndTime) {
+		this.receiveExpectEndTime = receiveExpectEndTime;
+	}
+
 	public Integer getNeedRefundFlag() {
 		return needRefundFlag;
 	}
