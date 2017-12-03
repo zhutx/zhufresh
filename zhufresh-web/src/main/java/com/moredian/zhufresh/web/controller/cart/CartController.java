@@ -64,8 +64,8 @@ public class CartController extends BaseController {
 
     @RequestMapping(value="/info", method= RequestMethod.GET)
     @ResponseBody
-    public BaseResponse info(@RequestParam("userId") Long userId) {
-        CartInfo cartInfo = cartService.getCartInfo(userId);
+    public BaseResponse info(@RequestParam("userId") Long userId, @RequestParam("addressId") Long addressId) {
+        CartInfo cartInfo = cartService.getCartInfo(userId, addressId);
         CartData cartData = cartInfoToCartData(cartInfo);
         BaseResponse<CartData> br = new BaseResponse<>();
         br.setData(cartData);

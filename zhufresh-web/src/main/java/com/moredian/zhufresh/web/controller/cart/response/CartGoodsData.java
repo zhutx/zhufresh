@@ -12,7 +12,7 @@ public class CartGoodsData {
     private Integer weight;
     private Integer unit;
     private Integer unitPrice;
-    private Integer status = CartGoodsStatus.UP.getValue();
+    private Integer status;
 
     public Long getCartGoodsId() {
         return cartGoodsId;

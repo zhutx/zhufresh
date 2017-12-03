@@ -199,4 +199,8 @@ public class BuildingManagerImpl implements BuildingManager {
         return true;
     }
 
+    @Override
+    public List<Long> findGoodsIdByBuilding(Long buildingId) {
+        return buildingGoodsMapper.findGoodsIdByBuilding(buildingId);
+    }
 }

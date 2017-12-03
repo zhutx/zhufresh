@@ -6,6 +6,7 @@ public class CartGoodsFullInfo extends CartGoodsInfo {
 
     private Integer unit;
     private Integer unitPrice;
+    private Integer status;
 
     public Integer getUnit() {
         return unit;
@@ -21,5 +22,13 @@ public class CartGoodsFullInfo extends CartGoodsInfo {
 
     public void setUnitPrice(Integer unitPrice) {
         this.unitPrice = unitPrice;
+    }
+
+    public Integer getStatus() {
+        return status;
+    }
+
+    public void setStatus(Integer status) {
+        this.status = status;
     }
 }

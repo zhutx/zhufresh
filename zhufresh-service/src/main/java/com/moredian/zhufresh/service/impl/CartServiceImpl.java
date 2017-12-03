@@ -3,9 +3,13 @@ package com.moredian.zhufresh.service.impl;
 import com.moredian.bee.common.rpc.ServiceResponse;
 import com.moredian.bee.common.utils.BeanUtils;
 import com.moredian.bee.tube.annotation.SI;
+import com.moredian.zhufresh.domain.Address;
 import com.moredian.zhufresh.domain.Cart;
 import com.moredian.zhufresh.domain.CartGoods;
 import com.moredian.zhufresh.domain.Goods;
+import com.moredian.zhufresh.enums.CartGoodsStatus;
+import com.moredian.zhufresh.manager.AddressManager;
+import com.moredian.zhufresh.manager.BuildingManager;
 import com.moredian.zhufresh.manager.CartManager;
 import com.moredian.zhufresh.manager.GoodsManager;
 import com.moredian.zhufresh.mapper.CartMapper;
@@ -28,6 +32,10 @@ public class CartServiceImpl implements CartService {
     private CartManager cartManager;
     @Autowired
     private GoodsManager goodsManager;
+    @Autowired
+    private AddressManager addressManager;
+    @Autowired
+    private BuildingManager buildingManager;
 
     @Override
     public ServiceResponse<Boolean> putIn(PutInCartRequest request) {
@@ -57,7 +65,10 @@ public class CartServiceImpl implements CartService {
         return BeanUtils.copyListProperties(CartGoodsInfo.class, cartGoodsList);
     }
 
-    private void buildCartInfo(CartInfo cartInfo, List<CartGoodsInfo> cartGoodsInfos) {
+    private void buildCartInfo(CartInfo cartInfo, List<CartGoodsInfo> cartGoodsInfos, Long addressId) {
+
+        Address address = addressManager.getAddress(cartInfo.getUserId(), addressId);
+        List<Long> scopeGoodsId = buildingManager.findGoodsIdByBuilding(address.getBuildingId());
 
         List<CartGoodsFullInfo> cartGoodsFullInfos = BeanUtils.copyListProperties(CartGoodsFullInfo.class, cartGoodsInfos);
 
@@ -65,13 +76,18 @@ public class CartServiceImpl implements CartService {
             Goods goods = goodsManager.getGoods(cartGoodsFullInfo.getGoodsId());
             cartGoodsFullInfo.setUnit(goods.getGoodsUnit());
             cartGoodsFullInfo.setUnitPrice(goods.getGoodsUnitPrice());
+            if (scopeGoodsId.contains(goods.getGoodsId())) {
+                cartGoodsFullInfo.setStatus(CartGoodsStatus.UP.getValue());
+            } else {
+                cartGoodsFullInfo.setStatus(CartGoodsStatus.DOWN.getValue());
+            }
         }
 
         cartInfo.setGoods(cartGoodsFullInfos);
     }
 
     @Override
-    public CartInfo getCartInfo(Long userId) {
+    public CartInfo getCartInfo(Long userId, Long addressId) {
         Cart cart = cartManager.getCartByUser(userId);
         if (cart == null) return null;
         CartInfo cartInfo = cartToCartInfo(cart);
@@ -79,7 +95,7 @@ public class CartServiceImpl implements CartService {
         List<CartGoods> cartGoodsList = cartManager.findByCart(cart.getCartId());
         List<CartGoodsInfo> cartGoodsInfos = cartGoodsListToCartGoodsInfoList(cartGoodsList);
 
-        buildCartInfo(cartInfo, cartGoodsInfos);
+        buildCartInfo(cartInfo, cartGoodsInfos, addressId);
 
         return cartInfo;
     }

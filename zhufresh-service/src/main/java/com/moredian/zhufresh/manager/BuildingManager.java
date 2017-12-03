@@ -32,4 +32,6 @@ public interface BuildingManager {
     Building getBuilding(Long buildingId);
 
     boolean configGoods(Long buildingId, List<Long> goodsIds);
+
+    List<Long> findGoodsIdByBuilding(Long buildingId);
 }

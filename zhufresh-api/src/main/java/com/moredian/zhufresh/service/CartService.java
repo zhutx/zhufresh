@@ -18,6 +18,6 @@ public interface CartService {
 
     ServiceResponse<Boolean> update(CartUpdateRequest request);
 
-    CartInfo getCartInfo(Long userId);
+    CartInfo getCartInfo(Long userId, Long addressId);
 
 }
