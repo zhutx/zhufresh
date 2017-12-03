@@ -10,6 +10,7 @@ import com.moredian.zhufresh.manager.CartManager;
 import com.moredian.zhufresh.mapper.CartGoodsMapper;
 import com.moredian.zhufresh.mapper.CartMapper;
 import com.moredian.zhufresh.request.CartGoodsRequest;
+import com.moredian.zhufresh.request.CartUpdateRequest;
 import com.moredian.zhufresh.request.PutInCartRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -79,6 +80,21 @@ public class CartManagerImpl implements CartManager {
         Cart cart = cartMapper.loadByUser(userId);
         cartMapper.delete(cart.getCartId());
         cartGoodsMapper.deleteAll(cart.getCartId());
+        return true;
+    }
+
+    @Override
+    @Transactional
+    public boolean update(CartUpdateRequest request) {
+
+        Cart cart = cartMapper.loadByUser(request.getUserId());
+        cartMapper.update(cart);
+
+        List<CartGoods> cartGoodsList = requestToDomain(cart.getCartId(), request.getGoods());
+        for (CartGoods cartGoods : cartGoodsList) {
+            cartGoodsMapper.update(cartGoods);
+        }
+
         return true;
     }
 }

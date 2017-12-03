@@ -4,6 +4,7 @@ import com.moredian.bee.common.rpc.ServiceResponse;
 import com.moredian.bee.tube.annotation.SI;
 import com.moredian.zhufresh.manager.CartManager;
 import com.moredian.zhufresh.mapper.CartMapper;
+import com.moredian.zhufresh.request.CartUpdateRequest;
 import com.moredian.zhufresh.request.PutInCartRequest;
 import com.moredian.zhufresh.service.CartService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,6 +24,12 @@ public class CartServiceImpl implements CartService {
     @Override
     public ServiceResponse<Boolean> clear(Long userId) {
         boolean result = cartManager.clear(userId);
+        return new ServiceResponse<>(true, null, result);
+    }
+
+    @Override
+    public ServiceResponse<Boolean> update(CartUpdateRequest request) {
+        boolean result = cartManager.update(request);
         return new ServiceResponse<>(true, null, result);
     }
 }

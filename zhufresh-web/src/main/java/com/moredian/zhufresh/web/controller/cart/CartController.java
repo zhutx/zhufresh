@@ -4,10 +4,12 @@ import com.moredian.bee.common.rpc.ServiceResponse;
 import com.moredian.bee.common.utils.BeanUtils;
 import com.moredian.bee.common.web.BaseResponse;
 import com.moredian.bee.tube.annotation.SI;
+import com.moredian.zhufresh.request.CartUpdateRequest;
 import com.moredian.zhufresh.request.PutInCartRequest;
 import com.moredian.zhufresh.service.CartService;
 import com.moredian.zhufresh.web.BaseController;
 import com.moredian.zhufresh.web.controller.cart.request.CartClearModel;
+import com.moredian.zhufresh.web.controller.cart.request.CartUpdateModel;
 import com.moredian.zhufresh.web.controller.cart.request.PutInCartModel;
 import com.moredian.zhufresh.web.controller.goods.request.GoodsCreateModel;
 import org.springframework.web.bind.annotation.*;
@@ -26,14 +28,25 @@ public class CartController extends BaseController {
     @RequestMapping(value="/putin", method= RequestMethod.POST)
     @ResponseBody
     public BaseResponse create(@RequestBody PutInCartModel model) {
-        cartService.putIn(buildRequest(model));
+        cartService.putIn(buildRequest(model)).pickDataThrowException();
         return new BaseResponse();
     }
 
     @RequestMapping(value="/clear", method= RequestMethod.POST)
     @ResponseBody
-    public BaseResponse clear(CartClearModel model) {
-        cartService.clear(model.getUserId());
+    public BaseResponse clear(@RequestBody CartClearModel model) {
+        cartService.clear(model.getUserId()).pickDataThrowException();
+        return new BaseResponse();
+    }
+
+    private CartUpdateRequest buildRequest(CartUpdateModel model) {
+        return BeanUtils.copyProperties(CartUpdateRequest.class, model);
+    }
+
+    @RequestMapping(value="/update", method= RequestMethod.PUT)
+    @ResponseBody
+    public BaseResponse update(@RequestBody CartUpdateModel model) {
+        cartService.update(buildRequest(model)).pickDataThrowException();
         return new BaseResponse();
     }
 

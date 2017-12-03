@@ -33,6 +33,10 @@
 	<delete id="deleteAll" parameterType="map">
 		delete from cart_goods where cart_id = #{cartId}
 	</delete>
+
+	<update id="update" parameterType="cartGoods">
+		update cart_goods set weight = #{weight}, gmt_modify = now(6) where cart_id = #{cartId} and goods_id = #{goodsId}
+	</update>
 	
 	<sql id="sql_select">
 		select
