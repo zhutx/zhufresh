@@ -4,6 +4,7 @@ import com.moredian.bee.common.rpc.ServiceResponse;
 import com.moredian.bee.common.utils.BeanUtils;
 import com.moredian.bee.common.web.BaseResponse;
 import com.moredian.bee.tube.annotation.SI;
+import com.moredian.zhufresh.model.CartInfo;
 import com.moredian.zhufresh.request.CartUpdateRequest;
 import com.moredian.zhufresh.request.PutInCartRequest;
 import com.moredian.zhufresh.service.CartService;
@@ -11,8 +12,12 @@ import com.moredian.zhufresh.web.BaseController;
 import com.moredian.zhufresh.web.controller.cart.request.CartClearModel;
 import com.moredian.zhufresh.web.controller.cart.request.CartUpdateModel;
 import com.moredian.zhufresh.web.controller.cart.request.PutInCartModel;
+import com.moredian.zhufresh.web.controller.cart.response.CartData;
+import com.moredian.zhufresh.web.controller.cart.response.CartGoodsData;
 import com.moredian.zhufresh.web.controller.goods.request.GoodsCreateModel;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @RequestMapping(value="/cart")
@@ -48,6 +53,23 @@ public class CartController extends BaseController {
     public BaseResponse update(@RequestBody CartUpdateModel model) {
         cartService.update(buildRequest(model)).pickDataThrowException();
         return new BaseResponse();
+    }
+
+    private CartData cartInfoToCartData(CartInfo cartInfo) {
+        CartData cartData = BeanUtils.copyProperties(CartData.class, cartInfo);
+        List<CartGoodsData> cartGoodsDataList = BeanUtils.copyListProperties(CartGoodsData.class, cartInfo.getGoods());
+        cartData.setGoods(cartGoodsDataList);
+        return cartData;
+    }
+
+    @RequestMapping(value="/info", method= RequestMethod.GET)
+    @ResponseBody
+    public BaseResponse info(@RequestParam("userId") Long userId) {
+        CartInfo cartInfo = cartService.getCartInfo(userId);
+        CartData cartData = cartInfoToCartData(cartInfo);
+        BaseResponse<CartData> br = new BaseResponse<>();
+        br.setData(cartData);
+        return br;
     }
 
 }

@@ -1,6 +1,7 @@
 package com.moredian.zhufresh.service;
 
 import com.moredian.bee.common.rpc.ServiceResponse;
+import com.moredian.zhufresh.model.CartInfo;
 import com.moredian.zhufresh.request.CartUpdateRequest;
 import com.moredian.zhufresh.request.PutInCartRequest;
 
@@ -16,5 +17,7 @@ public interface CartService {
     ServiceResponse<Boolean> clear(Long userId);
 
     ServiceResponse<Boolean> update(CartUpdateRequest request);
+
+    CartInfo getCartInfo(Long userId);
 
 }

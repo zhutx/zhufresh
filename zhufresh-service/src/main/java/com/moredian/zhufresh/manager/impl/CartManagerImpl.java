@@ -97,4 +97,14 @@ public class CartManagerImpl implements CartManager {
 
         return true;
     }
+
+    @Override
+    public Cart getCartByUser(Long userId) {
+        return cartMapper.loadByUser(userId);
+    }
+
+    @Override
+    public List<CartGoods> findByCart(Long cartId) {
+        return cartGoodsMapper.findByCart(cartId);
+    }
 }

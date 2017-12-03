@@ -4,6 +4,8 @@ import com.moredian.zhufresh.domain.CartGoods;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
+import java.util.List;
+
 @Mapper
 public interface CartGoodsMapper {
 
@@ -12,5 +14,7 @@ public interface CartGoodsMapper {
     int deleteAll(@Param("cartId") Long cartId);
 
     int update(CartGoods cartGoods);
+
+    List<CartGoods> findByCart(@Param("cartId") Long cartId);
 
 }

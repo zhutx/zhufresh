@@ -37,6 +37,11 @@
 	<update id="update" parameterType="cartGoods">
 		update cart_goods set weight = #{weight}, gmt_modify = now(6) where cart_id = #{cartId} and goods_id = #{goodsId}
 	</update>
+
+	<select id="findByCart" parameterType="map" resultMap="cartGoodsResultMap">
+		<include refid="sql_select"/>
+		from cart_goods where cart_id = #{cartId} and weight > 0 order by gmt_create
+	</select>
 	
 	<sql id="sql_select">
 		select
