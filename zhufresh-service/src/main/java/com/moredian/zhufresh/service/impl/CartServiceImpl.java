@@ -69,7 +69,7 @@ public class CartServiceImpl implements CartService {
 
     private void buildCartInfo(CartInfo cartInfo, List<CartGoodsInfo> cartGoodsInfos, Long addressId) {
         List<Long> scopeGoodsId = new ArrayList<>();
-        if (addressId != null && addressId != 0L) {
+        if (addressId != 0L) {
             Address address = addressManager.getAddress(cartInfo.getUserId(), addressId);
             scopeGoodsId = buildingManager.findGoodsIdByBuilding(address.getBuildingId());
         }
