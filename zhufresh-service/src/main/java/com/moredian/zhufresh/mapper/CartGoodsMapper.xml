@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+
+<mapper namespace="com.moredian.zhufresh.mapper.CartGoodsMapper" >
+
+    <resultMap id="cartGoodsResultMap" type="cartGoods">
+		<result column="cart_goods_id" property="cartGoodsId" />
+		<result column="cart_id" property="cartId" />
+		<result column="goods_id" property="goodsId" />
+		<result column="weight" property="weight" />
+		<result column="gmt_create" property="gmtCreate" />
+		<result column="gmt_modify" property="gmtModify" />
+	</resultMap>
+	
+	<insert id="insertOrInc" parameterType="cartGoods">
+	    insert into cart_goods (
+	        cart_goods_id,
+	        cart_id,
+			goods_id,
+			weight,
+	        gmt_create,
+	        gmt_modify
+	    ) values (
+	    	#{cartGoodsId},
+	        #{cartId},
+	        #{goodsId},
+	        #{weight},
+	        now(6),
+	        now(6)
+	    ) ON DUPLICATE KEY UPDATE weight = weight + #{weight}, gmt_modify = now(3)
+	</insert>
+	
+	<sql id="sql_select">
+		select
+			cart_goods_id,
+			cart_id,
+			goods_id,
+			weight,
+	        gmt_create,
+	        gmt_modify
+	</sql>
+	
+</mapper>

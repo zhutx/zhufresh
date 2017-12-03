@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+
+<mapper namespace="com.moredian.zhufresh.mapper.CartMapper" >
+
+    <resultMap id="cartResultMap" type="cart">
+		<result column="cart_id" property="cartId" />
+		<result column="user_id" property="userId" />
+		<result column="gmt_create" property="gmtCreate" />
+		<result column="gmt_modify" property="gmtModify" />
+	</resultMap>
+	
+	<insert id="insert" parameterType="cart">
+	    insert into cart (
+	        cart_id,
+			user_id,
+	        gmt_create,
+	        gmt_modify
+	    ) values (
+	        #{cartId},
+	        #{userId},
+	        now(6),
+	        now(6)
+	    )
+	</insert>
+
+	<update id="update" parameterType="cart">
+		update cart set gmt_modify = now(6) where user_id = #{userId} and cart_id = #{cartId}
+	</update>
+
+	<select id="loadByUser" parameterType="map" resultMap="cartResultMap">
+        <include refid="sql_select"/>
+		from cart where user_id = #{userId}
+	</select>
+	
+	<sql id="sql_select">
+		select
+			cart_id,
+			user_id,
+	        gmt_create,
+	        gmt_modify
+	</sql>
+	
+</mapper>
