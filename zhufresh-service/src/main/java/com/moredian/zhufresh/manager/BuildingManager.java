@@ -30,4 +30,6 @@ public interface BuildingManager {
     List<DeliverConfig> searchDeliverConfig(Long buildingId, String theDay);
 
     Building getBuilding(Long buildingId);
+
+    boolean configGoods(Long buildingId, List<Long> goodsIds);
 }

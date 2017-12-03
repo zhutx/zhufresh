@@ -29,4 +29,6 @@ public interface BuildingService {
 
     List<DeliverConfigInfo> searchDeliverConfig(Long buildingId, String theDay);
 
+    ServiceResponse<Boolean> configGoods(Long buildingId, List<Long> goodsIds);
+
 }

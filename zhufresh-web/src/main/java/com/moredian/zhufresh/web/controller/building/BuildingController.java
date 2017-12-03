@@ -124,7 +124,6 @@ public class BuildingController extends BaseController {
     public BaseResponse deliverConfig(@RequestBody DeliverConfigModel model) {
         buildingService.configDeliver(this.buildRequest(model)).pickDataThrowException();
         return new BaseResponse();
-
     }
 
     private List<DeliverConfigData> buildData(List<DeliverConfigInfo> infos) {
@@ -138,7 +137,13 @@ public class BuildingController extends BaseController {
         BaseResponse<List<DeliverConfigData>> br = new BaseResponse<>();
         br.setData(this.buildData(deliverConfigInfos));
         return br;
+    }
 
+    @RequestMapping(value="/goods/config", method= RequestMethod.POST)
+    @ResponseBody
+    public BaseResponse goodsConfig(@RequestBody BuildingGoodsConfigModel model) {
+        buildingService.configGoods(model.getBuildingId(), model.getGoodsIds()).pickDataThrowException();
+        return new BaseResponse();
     }
 
 }

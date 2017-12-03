@@ -97,4 +97,10 @@ public class BuildingServiceImpl implements BuildingService {
         List<DeliverConfig> deliverConfigList = buildingManager.searchDeliverConfig(buildingId, theDay);
         return deliverConfigListToDeliverConfigInfoList(deliverConfigList);
     }
+
+    @Override
+    public ServiceResponse<Boolean> configGoods(Long buildingId, List<Long> goodsIds) {
+        boolean result = buildingManager.configGoods(buildingId, goodsIds);
+        return new ServiceResponse<>(true, null, result);
+    }
 }

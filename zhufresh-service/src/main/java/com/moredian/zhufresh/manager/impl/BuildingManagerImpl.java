@@ -9,10 +9,12 @@ import com.moredian.bee.tube.annotation.SI;
 import com.moredian.idgenerator.service.IdgeneratorService;
 import com.moredian.zhufresh.config.ServiceProperties;
 import com.moredian.zhufresh.domain.Building;
+import com.moredian.zhufresh.domain.BuildingGoods;
 import com.moredian.zhufresh.domain.BuildingQueryCondition;
 import com.moredian.zhufresh.domain.DeliverConfig;
 import com.moredian.zhufresh.enums.BuildingStatus;
 import com.moredian.zhufresh.manager.BuildingManager;
+import com.moredian.zhufresh.mapper.BuildingGoodsMapper;
 import com.moredian.zhufresh.mapper.BuildingMapper;
 import com.moredian.zhufresh.mapper.DeliverConfigMapper;
 import com.moredian.zhufresh.model.BuildingInfo;
@@ -23,8 +25,10 @@ import com.moredian.zhufresh.request.DeliverConfigRequest;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
@@ -36,6 +40,8 @@ public class BuildingManagerImpl implements BuildingManager {
     private BuildingMapper buildingMapper;
     @Autowired
     private DeliverConfigMapper deliverConfigMapper;
+    @Autowired
+    private BuildingGoodsMapper buildingGoodsMapper;
     @SI
     private IdgeneratorService idgeneratorService;
     @Autowired
@@ -164,4 +170,33 @@ public class BuildingManagerImpl implements BuildingManager {
     public Building getBuilding(Long buildingId) {
         return buildingMapper.load(buildingId);
     }
+
+    @Override
+    @Transactional
+    public boolean configGoods(Long buildingId, List<Long> finalGoodsIds) {
+
+        BizAssert.notNull(buildingId, "buildingId is required");
+        BizAssert.notNull(finalGoodsIds);
+
+        List<Long> existGoodsIds = buildingGoodsMapper.findGoodsIdByBuilding(buildingId);
+        List<Long> tempFinalGoodsIds = new ArrayList<>();
+        tempFinalGoodsIds.addAll(finalGoodsIds);
+
+        tempFinalGoodsIds.removeAll(existGoodsIds); // 定位新增的
+        for (Long goodsId : tempFinalGoodsIds) {
+            BuildingGoods buildingGoods = new BuildingGoods();
+            buildingGoods.setBuildingGoodsId(genPrimaryKey(BuildingGoods.class.getName()));
+            buildingGoods.setBuildingId(buildingId);
+            buildingGoods.setGoodsId(goodsId);
+            buildingGoodsMapper.insert(buildingGoods);
+        }
+
+        existGoodsIds.removeAll(finalGoodsIds); // 定位删除的
+        for (Long goodsId : existGoodsIds) {
+            buildingGoodsMapper.deleteOne(buildingId, goodsId);
+        }
+
+        return true;
+    }
+
 }
