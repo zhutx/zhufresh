@@ -32,6 +32,10 @@
         <include refid="sql_select"/>
 		from cart where user_id = #{userId}
 	</select>
+
+	<delete id="delete" parameterType="map">
+		delete from cart where cart_id = #{cartId}
+	</delete>
 	
 	<sql id="sql_select">
 		select

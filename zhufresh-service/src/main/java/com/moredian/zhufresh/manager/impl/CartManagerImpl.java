@@ -13,6 +13,7 @@ import com.moredian.zhufresh.request.CartGoodsRequest;
 import com.moredian.zhufresh.request.PutInCartRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -51,6 +52,7 @@ public class CartManagerImpl implements CartManager {
     }
 
     @Override
+    @Transactional
     public boolean putIn(PutInCartRequest request) {
         BizAssert.notNull(request.getUserId(), "userId is required");
         BizAssert.notEmpty(request.getGoods());
@@ -68,6 +70,15 @@ public class CartManagerImpl implements CartManager {
             cartGoodsMapper.insertOrInc(cartGoods);
         }
 
+        return true;
+    }
+
+    @Override
+    @Transactional
+    public boolean clear(Long userId) {
+        Cart cart = cartMapper.loadByUser(userId);
+        cartMapper.delete(cart.getCartId());
+        cartGoodsMapper.deleteAll(cart.getCartId());
         return true;
     }
 }

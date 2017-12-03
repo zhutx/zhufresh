@@ -7,6 +7,7 @@ import com.moredian.bee.tube.annotation.SI;
 import com.moredian.zhufresh.request.PutInCartRequest;
 import com.moredian.zhufresh.service.CartService;
 import com.moredian.zhufresh.web.BaseController;
+import com.moredian.zhufresh.web.controller.cart.request.CartClearModel;
 import com.moredian.zhufresh.web.controller.cart.request.PutInCartModel;
 import com.moredian.zhufresh.web.controller.goods.request.GoodsCreateModel;
 import org.springframework.web.bind.annotation.*;
@@ -26,6 +27,13 @@ public class CartController extends BaseController {
     @ResponseBody
     public BaseResponse create(@RequestBody PutInCartModel model) {
         cartService.putIn(buildRequest(model));
+        return new BaseResponse();
+    }
+
+    @RequestMapping(value="/clear", method= RequestMethod.POST)
+    @ResponseBody
+    public BaseResponse clear(CartClearModel model) {
+        cartService.clear(model.getUserId());
         return new BaseResponse();
     }
 

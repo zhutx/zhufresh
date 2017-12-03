@@ -6,4 +6,6 @@ public interface CartManager {
 
     boolean putIn(PutInCartRequest request);
 
+    boolean clear(Long userId);
+
 }

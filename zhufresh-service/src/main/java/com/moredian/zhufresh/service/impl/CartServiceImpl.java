@@ -19,4 +19,10 @@ public class CartServiceImpl implements CartService {
         boolean result = cartManager.putIn(request);
         return new ServiceResponse<>(true, null, result);
     }
+
+    @Override
+    public ServiceResponse<Boolean> clear(Long userId) {
+        boolean result = cartManager.clear(userId);
+        return new ServiceResponse<>(true, null, result);
+    }
 }

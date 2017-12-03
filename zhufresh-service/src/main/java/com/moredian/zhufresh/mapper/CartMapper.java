@@ -13,4 +13,6 @@ public interface CartMapper {
 
     int update(Cart cart);
 
+    int delete(@Param("cartId") Long cartId);
+
 }

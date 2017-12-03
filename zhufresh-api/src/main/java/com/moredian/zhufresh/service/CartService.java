@@ -12,4 +12,6 @@ public interface CartService {
 
     ServiceResponse<Boolean> putIn(PutInCartRequest request);
 
+    ServiceResponse<Boolean> clear(Long userId);
+
 }

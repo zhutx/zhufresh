@@ -29,6 +29,10 @@
 	        now(6)
 	    ) ON DUPLICATE KEY UPDATE weight = weight + #{weight}, gmt_modify = now(3)
 	</insert>
+
+	<delete id="deleteAll" parameterType="map">
+		delete from cart_goods where cart_id = #{cartId}
+	</delete>
 	
 	<sql id="sql_select">
 		select
