@@ -2,12 +2,14 @@ package com.moredian.zhufresh.service.impl;
 
 import com.moredian.bee.common.rpc.ServiceResponse;
 import com.moredian.bee.common.utils.BeanUtils;
+import com.moredian.bee.common.utils.ExceptionUtils;
 import com.moredian.bee.tube.annotation.SI;
 import com.moredian.zhufresh.domain.Address;
 import com.moredian.zhufresh.domain.Cart;
 import com.moredian.zhufresh.domain.CartGoods;
 import com.moredian.zhufresh.domain.Goods;
 import com.moredian.zhufresh.enums.CartGoodsStatus;
+import com.moredian.zhufresh.enums.ZhufreshErrorCode;
 import com.moredian.zhufresh.manager.AddressManager;
 import com.moredian.zhufresh.manager.BuildingManager;
 import com.moredian.zhufresh.manager.CartManager;
@@ -66,9 +68,11 @@ public class CartServiceImpl implements CartService {
     }
 
     private void buildCartInfo(CartInfo cartInfo, List<CartGoodsInfo> cartGoodsInfos, Long addressId) {
-
-        Address address = addressManager.getAddress(cartInfo.getUserId(), addressId);
-        List<Long> scopeGoodsId = buildingManager.findGoodsIdByBuilding(address.getBuildingId());
+        List<Long> scopeGoodsId = new ArrayList<>();
+        if (addressId != null && addressId != 0L) {
+            Address address = addressManager.getAddress(cartInfo.getUserId(), addressId);
+            scopeGoodsId = buildingManager.findGoodsIdByBuilding(address.getBuildingId());
+        }
 
         List<CartGoodsFullInfo> cartGoodsFullInfos = BeanUtils.copyListProperties(CartGoodsFullInfo.class, cartGoodsInfos);
 
@@ -88,6 +92,7 @@ public class CartServiceImpl implements CartService {
 
     @Override
     public CartInfo getCartInfo(Long userId, Long addressId) {
+
         Cart cart = cartManager.getCartByUser(userId);
         if (cart == null) return null;
         CartInfo cartInfo = cartToCartInfo(cart);
