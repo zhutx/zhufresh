@@ -183,4 +183,14 @@ public class OrderManagerImpl implements OrderManager {
 
         return order.getOrderId();
     }
+
+    @Override
+    @Transactional
+    public boolean updateByPay(String orderCode, Integer payWay, String payCert) {
+        BizAssert.notBlank(orderCode, "orderCode is required");
+        BizAssert.notNull(payWay, "payWay is required");
+        BizAssert.notBlank(payCert, "payCert is required");
+        orderMapper.updateByPay(orderCode, payWay, payCert, OrderStatus.PAY.getValue());
+        return true;
+    }
 }

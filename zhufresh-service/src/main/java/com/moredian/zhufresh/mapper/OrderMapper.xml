@@ -51,5 +51,9 @@
 	        now(6)
 	    )
 	</insert>
+
+	<update id="updateByPay" parameterType="map">
+		update orders set status = #{status}, pay_way = #{payWay}, pay_cert = #{payCert}, gmt_modify = now(6) where order_code = #{orderCode}
+	</update>
 	
 </mapper>

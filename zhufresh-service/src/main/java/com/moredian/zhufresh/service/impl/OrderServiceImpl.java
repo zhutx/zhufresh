@@ -2,6 +2,7 @@ package com.moredian.zhufresh.service.impl;
 
 import com.moredian.bee.common.rpc.ServiceResponse;
 import com.moredian.bee.tube.annotation.SI;
+import com.moredian.zhufresh.enums.PayWay;
 import com.moredian.zhufresh.manager.OrderManager;
 import com.moredian.zhufresh.request.OrderCreateRequest;
 import com.moredian.zhufresh.service.OrderService;
@@ -16,6 +17,12 @@ public class OrderServiceImpl implements OrderService {
     @Override
     public ServiceResponse<Long> createOrder(OrderCreateRequest request) {
         Long result = orderManager.addOrder(request);
+        return new ServiceResponse<>(true, null, result);
+    }
+
+    @Override
+    public ServiceResponse<Boolean> updateByPay(String orderCode, Integer payWay, String payCert) {
+        boolean result = orderManager.updateByPay(orderCode, payWay, payCert);
         return new ServiceResponse<>(true, null, result);
     }
 }

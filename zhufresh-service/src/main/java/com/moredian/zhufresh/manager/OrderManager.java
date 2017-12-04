@@ -6,4 +6,6 @@ public interface OrderManager {
 
     Long addOrder(OrderCreateRequest request);
 
+    boolean updateByPay(String orderCode, Integer payWay, String payCert);
+
 }

@@ -12,4 +12,6 @@ public interface OrderService {
 
     ServiceResponse<Long> createOrder(OrderCreateRequest request);
 
+    ServiceResponse<Boolean> updateByPay(String orderCode, Integer payWay, String payCert);
+
 }
