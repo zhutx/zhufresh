@@ -6,10 +6,28 @@ public class GoodsQueryRequest implements Serializable {
 
     private static final long serialVersionUID = -302598038574976225L;
 
+    private Long userId;
+    private Long addressId;
     private Long goodsType1Id;
     private Long goodsType2Id;
     private String keywords;
     private Integer status;
+
+    public Long getUserId() {
+        return userId;
+    }
+
+    public void setUserId(Long userId) {
+        this.userId = userId;
+    }
+
+    public Long getAddressId() {
+        return addressId;
+    }
+
+    public void setAddressId(Long addressId) {
+        this.addressId = addressId;
+    }
 
     public Long getGoodsType1Id() {
         return goodsType1Id;

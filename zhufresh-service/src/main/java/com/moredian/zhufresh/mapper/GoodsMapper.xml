@@ -133,6 +133,10 @@
 		<if test="status != null">
 			and status = #{status}
 		</if>
+		<if test="goodsIds != null">
+			and goods_id in
+			<foreach collection="goodsIds" index="index" item="goodsId" open="(" separator="," close=")">#{goodsId}</foreach>
+		</if>
 		</where>
 	</sql>
 	

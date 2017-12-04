@@ -1,13 +1,24 @@
 package com.moredian.zhufresh.domain;
 
+import java.util.List;
+
 public class GoodsQueryCondition {
 
+    private List<Long> goodsIds;
     private Long goodsType1Id;
     private Long goodsType2Id;
     private String keywords;
     private Integer status;
     private Integer startRow;
     private Integer pageSize;
+
+    public List<Long> getGoodsIds() {
+        return goodsIds;
+    }
+
+    public void setGoodsIds(List<Long> goodsIds) {
+        this.goodsIds = goodsIds;
+    }
 
     public Long getGoodsType1Id() {
         return goodsType1Id;

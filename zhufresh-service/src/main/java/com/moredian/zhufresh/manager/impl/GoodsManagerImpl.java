@@ -7,12 +7,12 @@ import com.moredian.bee.mybatis.convertor.PaginationConvertor;
 import com.moredian.bee.mybatis.domain.PaginationDomain;
 import com.moredian.bee.tube.annotation.SI;
 import com.moredian.idgenerator.service.IdgeneratorService;
-import com.moredian.zhufresh.domain.Building;
-import com.moredian.zhufresh.domain.BuildingQueryCondition;
-import com.moredian.zhufresh.domain.Goods;
-import com.moredian.zhufresh.domain.GoodsQueryCondition;
+import com.moredian.zhufresh.domain.*;
 import com.moredian.zhufresh.enums.GoodsStatus;
+import com.moredian.zhufresh.manager.AddressManager;
+import com.moredian.zhufresh.manager.BuildingManager;
 import com.moredian.zhufresh.manager.GoodsManager;
+import com.moredian.zhufresh.mapper.BuildingGoodsMapper;
 import com.moredian.zhufresh.mapper.GoodsMapper;
 import com.moredian.zhufresh.model.BuildingInfo;
 import com.moredian.zhufresh.model.GoodsInfo;
@@ -20,14 +20,21 @@ import com.moredian.zhufresh.request.BuildingQueryRequest;
 import com.moredian.zhufresh.request.GoodsCreateRequest;
 import com.moredian.zhufresh.request.GoodsQueryRequest;
 import com.moredian.zhufresh.request.GoodsUpdateRequest;
+import org.apache.commons.collections.CollectionUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 @Service
 public class GoodsManagerImpl implements GoodsManager {
 
     @Autowired
     private GoodsMapper goodsMapper;
+    @Autowired
+    private AddressManager addressManager;
+    @Autowired
+    private BuildingManager buildingManager;
     @SI
     private IdgeneratorService idgeneratorService;
 
@@ -103,6 +110,15 @@ public class GoodsManagerImpl implements GoodsManager {
     public PaginationDomain<Goods> searchGoods(GoodsQueryRequest request, Pagination<GoodsInfo> pagination) {
 
         GoodsQueryCondition queryCondition = requestToCondition(request);
+
+        List<Long> goodsIds = null;
+        if (request.getUserId() != null) {
+            Address address = addressManager.getAddress(request.getUserId(), request.getAddressId());
+            goodsIds = buildingManager.findGoodsIdByBuilding(address.getBuildingId());
+        }
+        if (CollectionUtils.isNotEmpty(goodsIds)) {
+            queryCondition.setGoodsIds(goodsIds);
+        }
 
         PaginationDomain<Goods> paginationDomain = paginationToPaginationDomain(pagination);
 

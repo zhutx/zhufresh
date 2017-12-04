@@ -112,9 +112,11 @@ public class GoodsController extends BaseController {
 
     @RequestMapping(value="/list", method= RequestMethod.GET)
     @ResponseBody
-    public BaseResponse list(@RequestParam(value = "goodsType1Id", required = false) Long goodsType1Id, @RequestParam(value = "goodsType2Id", required = false) Long goodsType2Id, @RequestParam(value = "keywords", required = false) String keywords, @RequestParam(value = "status", required = false) Integer status) {
+    public BaseResponse list(@RequestParam(value = "userId", required = false) Long userId, @RequestParam(value = "addressId", required = false) Long addressId, @RequestParam(value = "goodsType1Id", required = false) Long goodsType1Id, @RequestParam(value = "goodsType2Id", required = false) Long goodsType2Id, @RequestParam(value = "keywords", required = false) String keywords, @RequestParam(value = "status", required = false) Integer status) {
 
         GoodsQueryModel model = new GoodsQueryModel();
+        model.setUserId(userId);
+        model.setAddressId(addressId);
         model.setGoodsType1Id(goodsType1Id);
         model.setGoodsType2Id(goodsType2Id);
         model.setKeywords(keywords);
