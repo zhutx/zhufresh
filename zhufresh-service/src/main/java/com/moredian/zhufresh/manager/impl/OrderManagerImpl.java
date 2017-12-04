@@ -14,6 +14,7 @@ import com.moredian.zhufresh.enums.ZhufreshErrorCode;
 import com.moredian.zhufresh.manager.*;
 import com.moredian.zhufresh.mapper.OrderGoodsMapper;
 import com.moredian.zhufresh.mapper.OrderMapper;
+import com.moredian.zhufresh.request.OrderArrivalRequest;
 import com.moredian.zhufresh.request.OrderCreateRequest;
 import com.moredian.zhufresh.request.OrderGoodsRequest;
 import com.moredian.zhufresh.service.OrderService;
@@ -192,5 +193,31 @@ public class OrderManagerImpl implements OrderManager {
         BizAssert.notBlank(payCert, "payCert is required");
         orderMapper.updateByPay(orderCode, payWay, payCert, OrderStatus.PAY.getValue());
         return true;
+    }
+
+    @Override
+    public boolean dispatch(Long orderId, Long operId) {
+        BizAssert.notNull(orderId, "orderId is required");
+        BizAssert.notNull(operId, "operId is required");
+
+        Long deliveryOperId = operId;
+        String deliveryOperName = null; // TODO
+        String deliveryMobile = null;
+        orderMapper.updateByDispatch(orderId, deliveryOperId, deliveryOperName, deliveryMobile);
+        return true;
+    }
+
+    @Override
+    public boolean deliver(Long orderId) {
+        BizAssert.notNull(orderId, "orderId is required");
+        orderMapper.updateByDeliver(orderId, OrderStatus.WAIT_DELI.getValue(), OrderStatus.IN_DELI.getValue());
+        return true;
+    }
+
+    @Override
+    public boolean arrival(OrderArrivalRequest request) {
+        BizAssert.notNull(request.getOrderId(), "orderId is required");
+        int result = orderMapper.updateByArrival(request.getOrderId(), request.getUserId(), request.getOperId(), OrderStatus.IN_DELI.getValue(), OrderStatus.FINISH.getValue());
+        return result > 0 ? true : false;
     }
 }

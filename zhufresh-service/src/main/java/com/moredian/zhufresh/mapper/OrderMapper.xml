@@ -55,5 +55,23 @@
 	<update id="updateByPay" parameterType="map">
 		update orders set status = #{status}, pay_way = #{payWay}, pay_cert = #{payCert}, gmt_modify = now(6) where order_code = #{orderCode}
 	</update>
+
+	<update id="updateByDispatch" parameterType="map">
+		update orders set delivery_oper_id = #{deliveryOperId}, delivery_oper_name = #{deliveryOperName}, delivery_mobile = #{deliveryMobile}, gmt_modify = now(6) where order_id = #{orderId}
+	</update>
+
+	<update id="updateByDeliver" parameterType="map">
+		update orders set status = #{newStatus}, gmt_modify = now(6) where order_id = #{orderId} and status = #{oldStatus}
+	</update>
+
+	<update id="updateByArrival" parameterType="map">
+		update orders set status = #{newStatus}, receive_real_time = now(6), gmt_modify = now(6) where order_id = #{orderId} and status = #{oldStatus}
+		<if test="userId != null">
+			and user_id = #{userId}
+		</if>
+		<if test="deliveryOperId != null">
+			and delivery_oper_id = #{deliveryOperId}
+		</if>
+	</update>
 	
 </mapper>
