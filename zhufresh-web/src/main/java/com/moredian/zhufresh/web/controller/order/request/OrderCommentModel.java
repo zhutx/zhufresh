@@ -7,7 +7,7 @@ public class OrderCommentModel {
     private Integer qualityStar;
     private Integer serviceStar;
     private Integer wholeStar;
-    private String comments_desc;
+    private String commentsDesc;
 
     public Long getUserId() {
         return userId;
@@ -49,11 +49,11 @@ public class OrderCommentModel {
         this.wholeStar = wholeStar;
     }
 
-    public String getComments_desc() {
-        return comments_desc;
+    public String getCommentsDesc() {
+        return commentsDesc;
     }
 
-    public void setComments_desc(String comments_desc) {
-        this.comments_desc = comments_desc;
+    public void setCommentsDesc(String commentsDesc) {
+        this.commentsDesc = commentsDesc;
     }
 }

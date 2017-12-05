@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+
+<mapper namespace="com.moredian.zhufresh.mapper.CommentsMapper" >
+	
+	<insert id="insert" parameterType="comments">
+	    insert into comments (
+	        comments_id,
+			user_id,
+			order_id,
+			quality_star,
+			service_star,
+			whole_star,
+			comments_desc,
+			status,
+	        gmt_create,
+	        gmt_modify
+	    ) values (
+	        #{commentsId},
+	        #{userId},
+	        #{orderId},
+	        #{qualityStar},
+	        #{serviceStar},
+	        #{wholeStar},
+	        #{commentsDesc},
+	        #{status},
+	        now(6),
+	        now(6)
+	    )
+	</insert>
+	
+</mapper>
