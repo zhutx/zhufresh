@@ -2,6 +2,7 @@ package com.moredian.zhufresh.service;
 
 import com.moredian.bee.common.rpc.ServiceResponse;
 import com.moredian.zhufresh.request.OrderArrivalRequest;
+import com.moredian.zhufresh.request.OrderCommentRequest;
 import com.moredian.zhufresh.request.OrderCreateRequest;
 
 /**
@@ -20,5 +21,7 @@ public interface OrderService {
     ServiceResponse<Boolean> deliver(Long orderId);
 
     ServiceResponse<Boolean> arrival(OrderArrivalRequest request);
+
+    ServiceResponse<Boolean> comment(OrderCommentRequest request);
 
 }

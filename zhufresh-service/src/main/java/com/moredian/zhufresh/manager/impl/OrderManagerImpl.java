@@ -7,14 +7,13 @@ import com.moredian.bee.tube.annotation.SI;
 import com.moredian.idgenerator.service.IdgeneratorService;
 import com.moredian.zhufresh.config.ServiceProperties;
 import com.moredian.zhufresh.domain.*;
-import com.moredian.zhufresh.enums.GoodsUnit;
-import com.moredian.zhufresh.enums.OrderStatus;
-import com.moredian.zhufresh.enums.OrderType;
-import com.moredian.zhufresh.enums.ZhufreshErrorCode;
+import com.moredian.zhufresh.enums.*;
 import com.moredian.zhufresh.manager.*;
+import com.moredian.zhufresh.mapper.CommentsMapper;
 import com.moredian.zhufresh.mapper.OrderGoodsMapper;
 import com.moredian.zhufresh.mapper.OrderMapper;
 import com.moredian.zhufresh.request.OrderArrivalRequest;
+import com.moredian.zhufresh.request.OrderCommentRequest;
 import com.moredian.zhufresh.request.OrderCreateRequest;
 import com.moredian.zhufresh.request.OrderGoodsRequest;
 import com.moredian.zhufresh.service.OrderService;
@@ -25,6 +24,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import javax.xml.stream.events.Comment;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -49,6 +49,8 @@ public class OrderManagerImpl implements OrderManager {
     private TicketManager ticketManager;
     @Autowired
     private CouponManager couponManager;
+    @Autowired
+    private CommentsMapper commentsMapper;
     @SI
     private IdgeneratorService idgeneratorService;
 
@@ -218,6 +220,30 @@ public class OrderManagerImpl implements OrderManager {
     public boolean arrival(OrderArrivalRequest request) {
         BizAssert.notNull(request.getOrderId(), "orderId is required");
         int result = orderMapper.updateByArrival(request.getOrderId(), request.getUserId(), request.getOperId(), OrderStatus.IN_DELI.getValue(), OrderStatus.FINISH.getValue());
-        return result > 0 ? true : false;
+        return true;
+    }
+
+    private Comments requestToDomain(OrderCommentRequest request) {
+        Comments comments = BeanUtils.copyProperties(Comments.class, request);
+        comments.setCommentsId(genPrimaryKey(Comments.class.getName()));
+        comments.setStatus(CommentsStatus.ENABLE.getValue());
+        return comments;
+    }
+
+    @Override
+    @Transactional
+    public boolean comment(OrderCommentRequest request) {
+        BizAssert.notNull(request.getUserId(), "userId is required");
+        BizAssert.notNull(request.getOrderId(), "orderId is required");
+        BizAssert.notNull(request.getQualityStar(), "qualityStar is required");
+        BizAssert.notNull(request.getServiceStar(), "serviceStar is required");
+        BizAssert.notNull(request.getWholeStar(), "wholeStar is required");
+
+        Comments comments = requestToDomain(request);
+        commentsMapper.insert(comments);
+
+        orderMapper.updateByComment(comments);
+
+        return true;
     }
 }

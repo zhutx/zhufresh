@@ -1,5 +1,6 @@
 package com.moredian.zhufresh.mapper;
 
+import com.moredian.zhufresh.domain.Comments;
 import com.moredian.zhufresh.domain.Order;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
@@ -16,5 +17,7 @@ public interface OrderMapper {
     int updateByDeliver(@Param("orderId") Long orderId, @Param("oldStatus") Integer oldStatus, @Param("newStatus") Integer newStatus);
 
     int updateByArrival(@Param("orderId") Long orderId, @Param("userId") Long userId, @Param("deliveryOperId") Long operId, @Param("oldStatus") Integer oldStatus, @Param("newStatus") Integer newStatus);
+
+    int updateByComment(Comments comments);
 
 }

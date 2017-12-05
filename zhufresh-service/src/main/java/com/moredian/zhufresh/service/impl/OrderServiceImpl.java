@@ -5,6 +5,7 @@ import com.moredian.bee.tube.annotation.SI;
 import com.moredian.zhufresh.enums.PayWay;
 import com.moredian.zhufresh.manager.OrderManager;
 import com.moredian.zhufresh.request.OrderArrivalRequest;
+import com.moredian.zhufresh.request.OrderCommentRequest;
 import com.moredian.zhufresh.request.OrderCreateRequest;
 import com.moredian.zhufresh.service.OrderService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -42,6 +43,12 @@ public class OrderServiceImpl implements OrderService {
     @Override
     public ServiceResponse<Boolean> arrival(OrderArrivalRequest request) {
         boolean result = orderManager.arrival(request);
+        return new ServiceResponse<>(true, null, result);
+    }
+
+    @Override
+    public ServiceResponse<Boolean> comment(OrderCommentRequest request) {
+        boolean result = orderManager.comment(request);
         return new ServiceResponse<>(true, null, result);
     }
 }

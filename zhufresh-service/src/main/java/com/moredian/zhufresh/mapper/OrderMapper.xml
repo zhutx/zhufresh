@@ -73,5 +73,9 @@
 			and delivery_oper_id = #{deliveryOperId}
 		</if>
 	</update>
+
+	<update id="updateByComment" parameterType="comments">
+		update orders set comments_flag = 1, comments_id = #{commentsId}, gmt_modify = now(6) where user_id = #{userId} and order_id = #{orderId}
+	</update>
 	
 </mapper>

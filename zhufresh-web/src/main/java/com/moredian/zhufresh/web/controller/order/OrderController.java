@@ -7,6 +7,7 @@ import com.moredian.bee.tube.annotation.SI;
 import com.moredian.zhufresh.enums.PayWay;
 import com.moredian.zhufresh.enums.YesNoFlag;
 import com.moredian.zhufresh.request.OrderArrivalRequest;
+import com.moredian.zhufresh.request.OrderCommentRequest;
 import com.moredian.zhufresh.request.OrderCreateRequest;
 import com.moredian.zhufresh.service.OrderService;
 import com.moredian.zhufresh.web.BaseController;
@@ -65,6 +66,17 @@ public class OrderController extends BaseController {
     @ResponseBody
     public BaseResponse arrival(@RequestBody OrderArrivalModel model) {
         orderService.arrival(buildRequest(model)).pickDataThrowException();
+        return new BaseResponse();
+    }
+
+    private OrderCommentRequest buildRequest(OrderCommentModel model) {
+        return BeanUtils.copyProperties(OrderCommentRequest.class, model);
+    }
+
+    @RequestMapping(value="/comment", method= RequestMethod.POST)
+    @ResponseBody
+    public BaseResponse comment(@RequestBody OrderCommentModel model) {
+        orderService.comment(buildRequest(model)).pickDataThrowException();
         return new BaseResponse();
     }
 
