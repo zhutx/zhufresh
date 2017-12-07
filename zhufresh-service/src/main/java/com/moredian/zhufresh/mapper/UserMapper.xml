@@ -26,7 +26,7 @@
 	<insert id="insert" parameterType="user">
 	    insert into users (
 	        user_id,
-			user_name,
+			username,
 	        password,
 	        mobile,
 	        status,
@@ -34,7 +34,7 @@
 	        gmt_modify
 	    ) values (
 	        #{userId},
-	        #{userName},
+	        #{username},
 	        #{password},
 	        #{mobile},
 	        #{status},
@@ -51,7 +51,7 @@
 	<sql id="sql_select">
 		select
 			user_id,
-			user_name,
+			username,
 			head_url,
 	        password,
 	        mobile,

@@ -4,6 +4,7 @@ import com.moredian.bee.common.utils.BeanUtils;
 import com.moredian.bee.common.utils.Validator;
 import com.moredian.bee.common.web.BaseResponse;
 import com.moredian.bee.tube.annotation.SI;
+import com.moredian.zhufresh.model.UserInfo;
 import com.moredian.zhufresh.request.LoginRequest;
 import com.moredian.zhufresh.request.RegisterRequest;
 import com.moredian.zhufresh.service.UserService;
@@ -12,6 +13,8 @@ import com.moredian.zhufresh.web.controller.user.request.LoginModel;
 import com.moredian.zhufresh.web.controller.user.request.RegisterModel;
 import org.apache.commons.lang.RandomStringUtils;
 import org.apache.commons.lang.StringUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.web.bind.annotation.*;
@@ -21,6 +24,8 @@ import java.util.concurrent.TimeUnit;
 @RestController
 @RequestMapping(value="/user")
 public class UserController extends BaseController {
+
+    private static final Logger logger = LoggerFactory.getLogger(UserController.class);
 
     @Autowired
     private StringRedisTemplate stringRedisTemplate;
@@ -32,11 +37,10 @@ public class UserController extends BaseController {
     public BaseResponse list(@RequestParam(value = "mobile") String mobile) {
         if (!Validator.isMobile(mobile)) return new BaseResponse("1", "手机号有误");
         String checkCode = RandomStringUtils.randomNumeric(4);
+        logger.info(mobile+"的验证码是："+checkCode);
         stringRedisTemplate.opsForValue().set(mobile, checkCode, 20, TimeUnit.MINUTES);
 
-        BaseResponse<String> br = new BaseResponse<>();
-        br.setData(checkCode);
-        return br;
+        return new BaseResponse();
     }
 
     private RegisterRequest buildRequest(RegisterModel model) {
@@ -64,7 +68,7 @@ public class UserController extends BaseController {
     @ResponseBody
     public BaseResponse login(@RequestBody LoginModel model) {
 
-        userService.login(buildRequest(model)).pickDataThrowException();
+        UserInfo userInfo = userService.login(buildRequest(model)).pickDataThrowException();
 
         return new BaseResponse();
     }

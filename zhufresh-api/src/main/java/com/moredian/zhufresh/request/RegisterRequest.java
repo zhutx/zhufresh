@@ -1,6 +1,10 @@
 package com.moredian.zhufresh.request;
 
-public class RegisterRequest {
+import java.io.Serializable;
+
+public class RegisterRequest implements Serializable {
+
+    private static final long serialVersionUID = 3261811000701644547L;
 
     private String mobile;
     private String password;
