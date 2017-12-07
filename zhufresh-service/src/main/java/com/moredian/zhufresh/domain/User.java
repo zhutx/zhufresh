@@ -9,6 +9,8 @@ public class User {
 	private String headUrl;
 	private String password;
 	private String mobile;
+	private String email;
+	private String wechat;
 	private Integer tickets;
 	private Integer beans;
 	private Integer balance;
@@ -17,6 +19,7 @@ public class User {
 	private Date loginTime;
 	private Integer succOrders;
 	private Integer vipFlag;
+	private Integer status;
 	private Date gmtCreate;
 	private Date gmtModify;
 	
@@ -50,6 +53,23 @@ public class User {
 	public void setMobile(String mobile) {
 		this.mobile = mobile;
 	}
+
+	public String getEmail() {
+		return email;
+	}
+
+	public void setEmail(String email) {
+		this.email = email;
+	}
+
+	public String getWechat() {
+		return wechat;
+	}
+
+	public void setWechat(String wechat) {
+		this.wechat = wechat;
+	}
+
 	public Integer getTickets() {
 		return tickets;
 	}
@@ -98,6 +118,15 @@ public class User {
 	public void setVipFlag(Integer vipFlag) {
 		this.vipFlag = vipFlag;
 	}
+
+	public Integer getStatus() {
+		return status;
+	}
+
+	public void setStatus(Integer status) {
+		this.status = status;
+	}
+
 	public Date getGmtCreate() {
 		return gmtCreate;
 	}

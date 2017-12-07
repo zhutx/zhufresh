@@ -25,6 +25,10 @@ public enum ZhufreshErrorCode implements ErrorCode {
 
 	ORDER_NO_GOODS(new V1ErrorCode(ErrorType.SERVICE, ErrorLevel.WARN, "021", "0002"), "无商品信息"),
 
+	ACCOUNT_FAIL(new V1ErrorCode(ErrorType.SERVICE, ErrorLevel.WARN, "021", "0002"), "账号或密码错误"),
+
+	ACCOUNT_DISABLE(new V1ErrorCode(ErrorType.SERVICE, ErrorLevel.WARN, "021", "0002"), "账号状态异常"),
+
 	;
 
 	/** 错误码，不能为空 */
