@@ -8,6 +8,7 @@ import com.moredian.zhufresh.model.CartInfo;
 import com.moredian.zhufresh.request.CartUpdateRequest;
 import com.moredian.zhufresh.request.PutInCartRequest;
 import com.moredian.zhufresh.service.CartService;
+import com.moredian.zhufresh.utils.AuthorizeUtil;
 import com.moredian.zhufresh.web.BaseController;
 import com.moredian.zhufresh.web.controller.cart.request.CartClearModel;
 import com.moredian.zhufresh.web.controller.cart.request.CartUpdateModel;
@@ -33,14 +34,15 @@ public class CartController extends BaseController {
     @RequestMapping(value="/putin", method= RequestMethod.POST)
     @ResponseBody
     public BaseResponse create(@RequestBody PutInCartModel model) {
+        model.setUserId(AuthorizeUtil.getUserId());
         cartService.putIn(buildRequest(model)).pickDataThrowException();
         return new BaseResponse();
     }
 
     @RequestMapping(value="/clear", method= RequestMethod.POST)
     @ResponseBody
-    public BaseResponse clear(@RequestBody CartClearModel model) {
-        cartService.clear(model.getUserId()).pickDataThrowException();
+    public BaseResponse clear() {
+        cartService.clear(AuthorizeUtil.getUserId()).pickDataThrowException();
         return new BaseResponse();
     }
 
@@ -51,6 +53,7 @@ public class CartController extends BaseController {
     @RequestMapping(value="/update", method= RequestMethod.PUT)
     @ResponseBody
     public BaseResponse update(@RequestBody CartUpdateModel model) {
+        model.setUserId(AuthorizeUtil.getUserId());
         cartService.update(buildRequest(model)).pickDataThrowException();
         return new BaseResponse();
     }
@@ -64,7 +67,8 @@ public class CartController extends BaseController {
 
     @RequestMapping(value="/info", method= RequestMethod.GET)
     @ResponseBody
-    public BaseResponse info(@RequestParam("userId") Long userId, @RequestParam("addressId") Long addressId) {
+    public BaseResponse info(@RequestParam("addressId") Long addressId) {
+        Long userId = AuthorizeUtil.getUserId();
         CartInfo cartInfo = cartService.getCartInfo(userId, addressId);
         CartData cartData = cartInfoToCartData(cartInfo);
         BaseResponse<CartData> br = new BaseResponse<>();

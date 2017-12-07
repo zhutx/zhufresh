@@ -9,6 +9,7 @@ import com.moredian.zhufresh.model.GoodsInfo;
 import com.moredian.zhufresh.request.CouponQueryRequest;
 import com.moredian.zhufresh.request.GoodsQueryRequest;
 import com.moredian.zhufresh.service.CouponService;
+import com.moredian.zhufresh.utils.AuthorizeUtil;
 import com.moredian.zhufresh.web.controller.coupon.request.BindUserModel;
 import com.moredian.zhufresh.web.controller.coupon.request.CouponBatchCreateModel;
 import com.moredian.zhufresh.web.controller.coupon.request.CouponQueryModel;
@@ -53,8 +54,8 @@ public class CouponController {
 
     @RequestMapping(value="/fetchOne", method= RequestMethod.GET)
     @ResponseBody
-    public BaseResponse fetchOne(@RequestParam(value = "userId") Long userId) {
-        CouponInfo couponInfo = couponService.getOneCoupon(userId);
+    public BaseResponse fetchOne() {
+        CouponInfo couponInfo = couponService.getOneCoupon(AuthorizeUtil.getUserId());
         CouponData data = couponInfoToCouponData(couponInfo);
         BaseResponse<CouponData> br = new BaseResponse<>();
         br.setData(data);

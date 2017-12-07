@@ -12,6 +12,7 @@ import com.moredian.zhufresh.request.GoodsQueryRequest;
 import com.moredian.zhufresh.request.GoodsCreateRequest;
 import com.moredian.zhufresh.request.GoodsUpdateRequest;
 import com.moredian.zhufresh.service.GoodsService;
+import com.moredian.zhufresh.utils.AuthorizeUtil;
 import com.moredian.zhufresh.web.BaseController;
 import com.moredian.zhufresh.web.controller.address.request.AddressDeleteModel;
 import com.moredian.zhufresh.web.controller.address.request.AddressUpdateModel;
@@ -112,10 +113,10 @@ public class GoodsController extends BaseController {
 
     @RequestMapping(value="/list", method= RequestMethod.GET)
     @ResponseBody
-    public BaseResponse list(@RequestParam(value = "userId", required = false) Long userId, @RequestParam(value = "addressId", required = false) Long addressId, @RequestParam(value = "goodsType1Id", required = false) Long goodsType1Id, @RequestParam(value = "goodsType2Id", required = false) Long goodsType2Id, @RequestParam(value = "keywords", required = false) String keywords, @RequestParam(value = "status", required = false) Integer status) {
+    public BaseResponse list(@RequestParam(value = "addressId", required = false) Long addressId, @RequestParam(value = "goodsType1Id", required = false) Long goodsType1Id, @RequestParam(value = "goodsType2Id", required = false) Long goodsType2Id, @RequestParam(value = "keywords", required = false) String keywords, @RequestParam(value = "status", required = false) Integer status) {
 
         GoodsQueryModel model = new GoodsQueryModel();
-        model.setUserId(userId);
+        model.setUserId(AuthorizeUtil.getUserId());
         model.setAddressId(addressId);
         model.setGoodsType1Id(goodsType1Id);
         model.setGoodsType2Id(goodsType2Id);
@@ -128,5 +129,28 @@ public class GoodsController extends BaseController {
         return br;
 
     }
+
+    /**
+     * 操作员查询食材
+     */
+    /*
+    @RequestMapping(value="/list", method= RequestMethod.GET)
+    @ResponseBody
+    public BaseResponse list(@RequestParam(value = "addressId", required = false) Long addressId, @RequestParam(value = "goodsType1Id", required = false) Long goodsType1Id, @RequestParam(value = "goodsType2Id", required = false) Long goodsType2Id, @RequestParam(value = "keywords", required = false) String keywords, @RequestParam(value = "status", required = false) Integer status) {
+
+        GoodsQueryModel model = new GoodsQueryModel();
+        model.setAddressId(addressId);
+        model.setGoodsType1Id(goodsType1Id);
+        model.setGoodsType2Id(goodsType2Id);
+        model.setKeywords(keywords);
+        model.setStatus(status);
+
+        Pagination<GoodsInfo> pagination = goodsService.searchGoods(this.buildRequest(model), this.buildPagination(model.getPageNo(), model.getPageSize()));
+        BaseResponse<PaginationGoodsData> br = new BaseResponse<>();
+        br.setData(paginationToPaginationData(pagination));
+        return br;
+
+    }
+    */
 
 }

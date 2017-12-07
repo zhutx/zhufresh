@@ -10,6 +10,7 @@ import com.moredian.zhufresh.request.OrderArrivalRequest;
 import com.moredian.zhufresh.request.OrderCommentRequest;
 import com.moredian.zhufresh.request.OrderCreateRequest;
 import com.moredian.zhufresh.service.OrderService;
+import com.moredian.zhufresh.utils.AuthorizeUtil;
 import com.moredian.zhufresh.web.BaseController;
 import com.moredian.zhufresh.web.controller.order.request.*;
 import org.springframework.web.bind.annotation.*;
@@ -28,6 +29,7 @@ public class OrderController extends BaseController {
     @RequestMapping(value="/create", method= RequestMethod.POST)
     @ResponseBody
     public BaseResponse create(@RequestBody OrderCreateModel model) {
+        model.setUserId(AuthorizeUtil.getUserId());
         ServiceResponse<Long> sr = orderService.createOrder(this.buildRequest(model));
         if (!sr.isSuccess()) sr.pickDataThrowException();
         BaseResponse<Long> br = new BaseResponse<>();
@@ -65,6 +67,7 @@ public class OrderController extends BaseController {
     @RequestMapping(value="/arrival", method= RequestMethod.POST)
     @ResponseBody
     public BaseResponse arrival(@RequestBody OrderArrivalModel model) {
+        model.setUserId(AuthorizeUtil.getUserId()); // TODO 配送员操作的话，这句删掉就可以了
         orderService.arrival(buildRequest(model)).pickDataThrowException();
         return new BaseResponse();
     }
@@ -76,6 +79,7 @@ public class OrderController extends BaseController {
     @RequestMapping(value="/comment", method= RequestMethod.POST)
     @ResponseBody
     public BaseResponse comment(@RequestBody OrderCommentModel model) {
+        model.setUserId(AuthorizeUtil.getUserId());
         orderService.comment(buildRequest(model)).pickDataThrowException();
         return new BaseResponse();
     }

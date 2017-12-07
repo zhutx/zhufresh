@@ -11,6 +11,7 @@ import com.moredian.zhufresh.request.MenuCreateRequest;
 import com.moredian.zhufresh.request.MenuQueryRequest;
 import com.moredian.zhufresh.request.TicketQueryRequest;
 import com.moredian.zhufresh.service.TicketService;
+import com.moredian.zhufresh.utils.AuthorizeUtil;
 import com.moredian.zhufresh.web.BaseController;
 import com.moredian.zhufresh.web.controller.menu.request.MenuCreateModel;
 import com.moredian.zhufresh.web.controller.menu.request.MenuQueryModel;
@@ -72,15 +73,16 @@ public class TicketController extends BaseController {
     @RequestMapping(value="/bind", method= RequestMethod.POST)
     @ResponseBody
     public BaseResponse bindTicket(@RequestBody TicketBindUserModel model) {
+        model.setUserId(AuthorizeUtil.getUserId());
         ticketService.bindUser(model.getUserId(), model.getTicketCode()).pickDataThrowException();
         return new BaseResponse();
     }
 
     @RequestMapping(value="/user/list", method= RequestMethod.GET)
     @ResponseBody
-    public BaseResponse findUserTicket(@RequestParam(value = "userId") Long userId) {
+    public BaseResponse findUserTicket() {
 
-        List<TicketInfo> ticketInfos = ticketService.findUserTicket(userId);
+        List<TicketInfo> ticketInfos = ticketService.findUserTicket(AuthorizeUtil.getUserId());
         BaseResponse<List<TicketData>> br = new BaseResponse<>();
         br.setData(ticketInfosToTicketDatas(ticketInfos));
         return br;

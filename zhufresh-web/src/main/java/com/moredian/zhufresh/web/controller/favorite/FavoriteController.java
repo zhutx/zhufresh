@@ -10,6 +10,7 @@ import com.moredian.zhufresh.model.MenuInfo;
 import com.moredian.zhufresh.request.FavoriteCreateRequest;
 import com.moredian.zhufresh.request.FavoriteUpdateRequest;
 import com.moredian.zhufresh.service.FavoriteService;
+import com.moredian.zhufresh.utils.AuthorizeUtil;
 import com.moredian.zhufresh.web.BaseController;
 import com.moredian.zhufresh.web.controller.favorite.request.*;
 import com.moredian.zhufresh.web.controller.favorite.response.FavoriteData;
@@ -33,6 +34,7 @@ public class FavoriteController extends BaseController {
     @RequestMapping(value="/create", method= RequestMethod.POST)
     @ResponseBody
     public BaseResponse create(@RequestBody FavoriteCreateModel model) {
+        model.setUserId(AuthorizeUtil.getUserId());
         ServiceResponse<Long> sr = favoriteService.createFavorite(this.buildRequest(model));
         if (!sr.isSuccess()) sr.pickDataThrowException();
         BaseResponse<Long> br = new BaseResponse<>();
@@ -47,6 +49,7 @@ public class FavoriteController extends BaseController {
     @RequestMapping(value="/update", method= RequestMethod.PUT)
     @ResponseBody
     public BaseResponse update(@RequestBody FavoriteUpdateModel model) {
+        model.setUserId(AuthorizeUtil.getUserId());
         favoriteService.updateFavorite(this.buildRequest(model)).pickDataThrowException();
         return new BaseResponse();
     }
@@ -54,6 +57,7 @@ public class FavoriteController extends BaseController {
     @RequestMapping(value="/delete", method= RequestMethod.DELETE)
     @ResponseBody
     public BaseResponse delete(@RequestBody FavoriteDeleteModel model) {
+        model.setUserId(AuthorizeUtil.getUserId());
         favoriteService.deleteFavorite(model.getUserId(), model.getFavoriteId()).pickDataThrowException();
         return new BaseResponse();
     }
@@ -61,6 +65,7 @@ public class FavoriteController extends BaseController {
     @RequestMapping(value="/do", method= RequestMethod.POST)
     @ResponseBody
     public BaseResponse doFavorite(@RequestBody FavoriteDoModel model) {
+        model.setUserId(AuthorizeUtil.getUserId());
         favoriteService.doFavorite(model.getUserId(), model.getFavoriteId(), model.getMenuId());
         return new BaseResponse();
     }
@@ -68,6 +73,7 @@ public class FavoriteController extends BaseController {
     @RequestMapping(value="/cancel", method= RequestMethod.POST)
     @ResponseBody
     public BaseResponse cancelFavorite(@RequestBody FavoriteCancelModel model) {
+        model.setUserId(AuthorizeUtil.getUserId());
         favoriteService.cancelFavorite(model.getUserId(), model.getMenuId());
         return new BaseResponse();
     }
@@ -78,8 +84,8 @@ public class FavoriteController extends BaseController {
 
     @RequestMapping(value="/list", method= RequestMethod.GET)
     @ResponseBody
-    public BaseResponse list(@RequestParam(value = "userId") Long userId) {
-        List<FavoriteInfo> favoriteInfos = favoriteService.searchFavorite(userId);
+    public BaseResponse list() {
+        List<FavoriteInfo> favoriteInfos = favoriteService.searchFavorite(AuthorizeUtil.getUserId());
         BaseResponse<List<FavoriteData>> br = new BaseResponse<>();
         br.setData(favoriteInfoListToFavoriteDataList(favoriteInfos));
         return br;
@@ -104,10 +110,10 @@ public class FavoriteController extends BaseController {
 
     @RequestMapping(value="/menus", method= RequestMethod.GET)
     @ResponseBody
-    public BaseResponse menus(@RequestParam(value = "userId") Long userId, @RequestParam(value = "favoriteId") Long favoriteId) {
+    public BaseResponse menus(@RequestParam(value = "favoriteId") Long favoriteId) {
 
         FavoriteMenuQueryModel model = new FavoriteMenuQueryModel();
-        model.setUserId(userId);
+        model.setUserId(AuthorizeUtil.getUserId());
         model.setFavoriteId(favoriteId);
 
         Pagination<MenuInfo> pagination = favoriteService.findMenu(model.getUserId(), model.getFavoriteId(), this.buildPagination(model.getPageNo(), model.getPageSize()));
