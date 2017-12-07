@@ -10,4 +10,6 @@ public interface UserManager {
 
     User login(LoginRequest request);
 
+    User getUser(Long userId);
+
 }

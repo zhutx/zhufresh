@@ -11,4 +11,6 @@ public interface UserMapper {
 
     User loadByMobileLogin(@Param("mobile") String mobile, @Param("password") String password);
 
+    User load(@Param("userId") Long userId);
+
 }

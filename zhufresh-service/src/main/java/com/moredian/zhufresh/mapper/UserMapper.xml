@@ -48,6 +48,11 @@
 		from users where mobile = #{mobile} and password = #{password}
 	</select>
 
+	<select id="load" parameterType="map" resultMap="userResultMap">
+		<include refid="sql_select"/>
+		from users where user_id = #{userId}
+	</select>
+
 	<sql id="sql_select">
 		select
 			user_id,

@@ -33,4 +33,10 @@ public class UserServiceImpl implements UserService {
         User user = userManager.login(request);
         return new ServiceResponse<>(true, null, userToUserInfo(user));
     }
+
+    @Override
+    public UserInfo getUser(Long userId) {
+        User user = userManager.getUser(userId);
+        return userToUserInfo(user);
+    }
 }

@@ -11,6 +11,7 @@ import com.moredian.zhufresh.service.UserService;
 import com.moredian.zhufresh.web.BaseController;
 import com.moredian.zhufresh.web.controller.user.request.LoginModel;
 import com.moredian.zhufresh.web.controller.user.request.RegisterModel;
+import com.moredian.zhufresh.web.controller.user.response.UserData;
 import org.apache.commons.lang.RandomStringUtils;
 import org.apache.commons.lang.StringUtils;
 import org.slf4j.Logger;
@@ -71,6 +72,21 @@ public class UserController extends BaseController {
         UserInfo userInfo = userService.login(buildRequest(model)).pickDataThrowException();
 
         return new BaseResponse();
+    }
+
+    private UserData userInfoToUserData(UserInfo userInfo) {
+        return BeanUtils.copyProperties(UserData.class, userInfo);
+    }
+
+    @RequestMapping(value="/info", method= RequestMethod.GET)
+    @ResponseBody
+    public BaseResponse info(@RequestParam(value = "userId") Long userId) {
+
+        UserInfo userInfo = userService.getUser(userId);
+
+        BaseResponse br = new BaseResponse();
+        br.setData(userInfoToUserData(userInfo));
+        return br;
     }
 
 }

@@ -58,4 +58,10 @@ public class UserManagerImpl implements UserManager {
 
         return user;
     }
+
+    @Override
+    public User getUser(Long userId) {
+        BizAssert.notNull(userId);
+        return userMapper.load(userId);
+    }
 }

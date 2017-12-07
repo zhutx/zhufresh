@@ -16,4 +16,6 @@ public interface UserService {
 
     ServiceResponse<UserInfo> login(LoginRequest request);
 
+    UserInfo getUser(Long userId);
+
 }
