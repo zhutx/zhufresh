@@ -6,7 +6,7 @@ import org.springframework.session.web.http.CookieHttpSessionStrategy;
 import org.springframework.session.web.http.HeaderHttpSessionStrategy;
 import org.springframework.session.web.http.HttpSessionStrategy;
 
-@EnableRedisHttpSession(maxInactiveIntervalInSeconds = Integer.MAX_VALUE)
+@EnableRedisHttpSession(maxInactiveIntervalInSeconds = 3600 * 24 * 3)
 public class HttpSessionConfig {
     /**
      * 以独立的header属性x-auth-token，返回sessionid的值。对接硬件设备可以采用这种方式。
