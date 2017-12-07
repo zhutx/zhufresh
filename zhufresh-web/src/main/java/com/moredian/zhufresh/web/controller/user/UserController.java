@@ -8,6 +8,7 @@ import com.moredian.zhufresh.model.UserInfo;
 import com.moredian.zhufresh.request.LoginRequest;
 import com.moredian.zhufresh.request.RegisterRequest;
 import com.moredian.zhufresh.service.UserService;
+import com.moredian.zhufresh.utils.AuthorizeUtil;
 import com.moredian.zhufresh.web.BaseController;
 import com.moredian.zhufresh.web.controller.user.request.LoginModel;
 import com.moredian.zhufresh.web.controller.user.request.RegisterModel;
@@ -20,6 +21,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 import java.util.concurrent.TimeUnit;
 
 @RestController
@@ -67,9 +70,11 @@ public class UserController extends BaseController {
 
     @RequestMapping(value="/login", method= RequestMethod.POST)
     @ResponseBody
-    public BaseResponse login(@RequestBody LoginModel model) {
+    public BaseResponse login(@RequestBody LoginModel model, HttpSession session) {
 
         UserInfo userInfo = userService.login(buildRequest(model)).pickDataThrowException();
+
+        session.setAttribute(AuthorizeUtil.KEY_UID, String.valueOf(userInfo.getUserId()));
 
         return new BaseResponse();
     }
@@ -78,10 +83,12 @@ public class UserController extends BaseController {
         return BeanUtils.copyProperties(UserData.class, userInfo);
     }
 
+
     @RequestMapping(value="/info", method= RequestMethod.GET)
     @ResponseBody
-    public BaseResponse info(@RequestParam(value = "userId") Long userId) {
+    public BaseResponse info() {
 
+        Long userId = AuthorizeUtil.getUserId();
         UserInfo userInfo = userService.getUser(userId);
 
         BaseResponse br = new BaseResponse();
